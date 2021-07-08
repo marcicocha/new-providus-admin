@@ -3,185 +3,45 @@
     <div class="page_header">
       <h1>Work Group</h1>
       <div class="wrapper">
-        <div class="search-bar"></div>
         <div class="add-button-wrapper">
-          <AppButton
-            class="add-button"
-            title="Add Work Group"
-            color="primary"
-            icon="fa fa-plus"
-            @click="toggleModal('CREATE_MODE', {})"
-          />
+          <AppButton class="add-button" icon="plus" @click="showModal"
+            >Add Work Group</AppButton
+          >
         </div>
       </div>
     </div>
-    <AppTable
-      :columns="columns"
-      :data-source="dataSource"
-      :loading="loadingTable"
+    <br />
+    <AppWorkGroupTable :key="counter" @editWorkGroup="editWorkGroup" />
+    <a-modal
+      :visible="isModalVisible"
+      width="500px"
+      :footer="null"
+      :destroy-on-close="true"
+      centered
+      @cancel="closeModal"
     >
-      <template slot="actions" slot-scope="{ record }">
-        <div class="dropdown is-hoverable">
-          <div class="dropdown-trigger">
-            <i
-              class="custom-table-btn fas fa-ellipsis-v"
-              aria-controls="dropdown-menu"
-            >
-            </i>
-          </div>
-          <div id="dropdown-menu" class="dropdown-menu" role="menu">
-            <div class="dropdown-content">
-              <a
-                class="dropdown-item"
-                @click="toggleModal('UPDATE_MODE', record)"
-              >
-                <i class="fas fa-pencil-alt" /> Edit Work Group
-              </a>
-              <a
-                class="dropdown-item"
-                @click="toggleModal('DELETE_MODE', record)"
-              >
-                <i class="fas fa-trash-alt" /> Delete Work Group
-              </a>
-            </div>
-          </div>
-        </div>
-      </template>
-    </AppTable>
-    <AppPagination :total-items="totalElements" :page="page" />
-    <AppModal :is-visible="isModalVisible" @closeModal="closeModal">
-      <template slot="modal-title"
-        ><h1>
-          {{
-            mode === 'CREATE_MODE'
-              ? 'Add New'
-              : mode === 'UPDATE_MODE'
-              ? 'Edit'
-              : mode === 'DELETE_MODE'
-              ? 'Delete'
-              : ''
-          }}
-          Work Group
-        </h1></template
-      >
-      <template slot="content">
-        <div v-if="mode !== 'DELETE_MODE'" class="columns is-multiline">
-          <div class="column is-half">
-            <AppInput
-              v-model="workGroupObject.order"
-              label="Order"
-              is-number
-              placeholder="order"
-              required
-              :disabled="!isCreateOnly"
-            />
-          </div>
-          <div class="column is-half">
-            <AppInput
-              v-model="workGroupObject.userWorkFlow"
-              label="User WorkFlow"
-              placeholder="Enter User’s WorkFlow"
-              required
-            />
-          </div>
-          <div class="column is-full">
-            <AppTextArea
-              v-model="workGroupObject.userWorkFlowDescription"
-              label="WorkFlow Description"
-              placeholder="Enter WorkFlow Description"
-              :rows="1"
-              required
-            />
-          </div>
-          <div class="column">
-            <AppSwitchComponent
-              v-model="workGroupObject.freeWorkFlow"
-              label="Free WorkFlow ?"
-            />
-          </div>
-          <div class="column is-half">
-            <AppSelectHybrid
-              v-model="workGroupObject.groupId"
-              url="/systemConfiguration/resourceKeys"
-              :call-back-func="
-                (resp) => ({
-                  text: resp,
-                  value: resp,
-                })
-              "
-              label="Group Id"
-              placeholder="GroupId"
-              :disabled="!isCreateOnly"
-              required
-            />
-          </div>
-          <div class="column is-full">
-            <AppTextArea
-              v-model="workGroupObject.groupDescription"
-              label="Group Description"
-              placeholder="Group Description"
-              :rows="1"
-            />
-          </div>
-          <div class="column is-full">
-            <AppButton
-              title="Submit"
-              style="padding: 30px"
-              :loading="loading"
-              @click="actionHandler(mode)"
-            />
-          </div>
-        </div>
-        <div v-if="mode === 'DELETE_MODE'" class="columns is-multiline">
-          <div class="column is-full">
-            <p class="delete-message">
-              Are you sure you want to delete this workgroup? This action is
-              irreversible.
-            </p>
-          </div>
-          <div class="column">
-            <AppButton
-              class="custom-btn"
-              title="No"
-              style="padding: 20px"
-              @click="isModalVisible = false"
-            />
-          </div>
-          <div class="column">
-            <AppButton
-              class="custom-btn"
-              title="Yes"
-              style="padding: 20px"
-              @click="actionHandler()"
-            />
-          </div>
-        </div>
-      </template>
-    </AppModal>
+      <h1>
+        {{ mode === 'CREATE_MODE' ? 'Add New' : 'Edit' }}
+        Work Group
+      </h1>
+      <AppWorkGroupForm
+        currentWorkGroupObject="currentWorkGroupObject"
+        :mode="mode"
+        @formSubmissionCompleted="closeModal"
+      />
+    </a-modal>
   </div>
 </template>
 <script>
-// import AppMultiSelectComponent from '@/components/UI/AppMultiSelectComponent.vue'
-import AppTable from '@/components/UI/AppTable.vue'
-import AppModal from '@/components/UI/AppModal.vue'
-import AppTextArea from '@/components/UI/AppTextArea.vue'
-import AppSwitchComponent from '@/components/UI/AppSwitchComponent.vue'
+import AppWorkGroupTable from '@/components/workgroup/AppWorkGroupTable'
+import AppWorkGroupForm from '@/components/workgroup/AppWorkGroupForm'
 import AppButton from '@/components/UI/AppButton.vue'
-import AppPagination from '@/components/UI/AppPagination'
-import AppSelectHybrid from '@/components/UI/AppSelectHybrid'
-import AppInput from '@/components/UI/AppInput.vue'
 
 export default {
   components: {
-    // AppMultiSelectComponent,
-    AppTable,
-    AppModal,
-    AppTextArea,
-    AppSwitchComponent,
-    AppPagination,
     AppButton,
-    AppSelectHybrid,
-    AppInput,
+    AppWorkGroupForm,
+    AppWorkGroupTable,
   },
   middleware: ['auth'],
   data() {
@@ -194,30 +54,8 @@ export default {
       contextSearchObject: {},
       workGroupObject: {},
       dataSource: [],
-      columns: [
-        {
-          name: 'Group Id',
-          dataIndex: 'groupId',
-        },
-        {
-          name: 'Flow',
-          dataIndex: 'userWorkFlow',
-        },
-        {
-          name: 'Group Description',
-          dataIndex: 'groupDescription',
-        },
-        {
-          name: 'Flow Description',
-          dataIndex: 'userWorkFlowDescription',
-        },
-        {
-          name: '',
-          dataIndex: 'actions',
-        },
-      ],
-      page: 0,
-      totalElements: 0,
+      currentWorkGroupObject: {},
+      counter: 0,
     }
   },
   computed: {
@@ -244,293 +82,20 @@ export default {
       this.$router.push('/')
     }
   },
-  mounted() {
-    this.getWorkGroupMethod()
-  },
   methods: {
-    resetMethod() {
-      this.contextSearchObject = {}
+    editWorkGroup(record) {
+      this.isModalVisible = true
+      this.mode = 'UPDATE_MODE'
+      this.currentWorkGroupObject = record
     },
-    pageChange(page) {
-      this.page = page
-
-      this.getWorkGroupMethod()
-    },
-    toggleModal(mode, record) {
-      if (mode) {
-        this.mode = mode
-        this.workGroupObject = record
-        this.isModalVisible = true
-      }
+    showModal() {
+      this.isModalVisible = true
+      this.currentWorkGroupObject = {}
+      this.mode = 'CREATE_MODE'
     },
     closeModal() {
-      if (this.isModalVisible) {
-        this.isModalVisible = false
-      }
-    },
-    toggleContextSearch() {
-      this.isContextSearch = !this.isContextSearch
-    },
-    isValid() {
-      if (
-        this.workGroupObject.order &&
-        this.workGroupObject.userWorkFlow &&
-        this.workGroupObject.groupId &&
-        this.workGroupObject.userWorkFlowDescription
-      ) {
-        return true
-      } else {
-        return false
-      }
-    },
-    actionHandler() {
-      if (this.mode === 'CREATE_MODE') {
-        if (this.isValid()) {
-          this.createWorkGroup()
-        } else {
-          this.$toast.open({
-            message: `<p class="toast-title">Warning</p>
-                    <p class="toast-msg">please fill all required fields</p>`,
-            type: 'warning',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      } else if (this.mode === 'UPDATE_MODE') {
-        if (this.isValid()) {
-          this.editWorkGroup()
-        } else {
-          this.$toast.open({
-            message: `<p class="toast-title">Warning</p>
-                    <p class="toast-msg">please fill all required fields</p>`,
-            type: 'warning',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      } else if (this.mode === 'DELETE_MODE') {
-        this.deleteWorkGroup()
-      }
-    },
-    async deleteWorkGroup() {
-      const user = JSON.parse(localStorage.getItem('user'))
-      const params = {
-        userWorkFlow: this.workGroupObject.userWorkFlow,
-        workGroupFLow: this.workGroupObject.groupId,
-      }
-      const config = {
-        headers: { Authorization: `Bearer ${user.token}` },
-        params,
-      }
-      this.loading = true
-      try {
-        await this.$axios.$delete(
-          '/workFlowGroup/deleteWorkFlowGroupByUserWorkFLow',
-          config
-        )
-        this.loading = false
-        this.closeModal()
-        this.$toast.open({
-          message: `<p class="toast-title">Success</p>
-                    <p class="toast-msg"> Work Group Successfully Deleted </p>`,
-          type: 'success',
-          duration: 4000,
-          dismissible: true,
-        })
-        this.getWorkGroupMethod()
-      } catch (err) {
-        this.loading = false
-        let errorMessage = ''
-
-        this.isLoading = false
-
-        // Network Error
-        if (String(err).includes('Network')) {
-          errorMessage = err
-          this.$toast.open({
-            message: `<p class="toast-title">Error</p>
-                    <p class="toast-msg"> Network Error </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-          return
-        }
-
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response.data
-
-          errorMessage = res.errorMessage
-
-          this.$toast.open({
-            message: `<p class="toast-title">Error</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      }
-    },
-    async editWorkGroup() {
-      const user = JSON.parse(localStorage.getItem('user'))
-      const config = {
-        headers: { Authorization: `Bearer ${user.token}` },
-      }
-      this.loading = true
-      try {
-        await this.$axios.$put('/workFlowGroup', this.workGroupObject, config)
-        this.loading = false
-        this.closeModal()
-        this.$toast.open({
-          message: `<p class="toast-title">Success</p>
-                    <p class="toast-msg"> Work Group Edited Successfully </p>`,
-          type: 'success',
-          duration: 4000,
-          dismissible: true,
-        })
-        this.getWorkGroupMethod()
-      } catch (err) {
-        this.loading = false
-        let errorMessage = ''
-
-        this.isLoading = false
-
-        // Network Error
-        if (String(err).includes('Network')) {
-          errorMessage = err
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> Network Error </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-          return
-        }
-
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response.data
-
-          errorMessage = res.errorMessage
-
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      }
-    },
-    async createWorkGroup() {
-      const user = JSON.parse(localStorage.getItem('user'))
-      const config = {
-        headers: { Authorization: `Bearer ${user.token}` },
-      }
-      this.loading = true
-      try {
-        await this.$axios.$post('/workFlowGroup', this.workGroupObject, config)
-        this.loading = false
-        this.closeModal()
-        this.$toast.open({
-          message: `<p class="toast-title">Success</p>
-                    <p class="toast-msg"> Work Group Created Successfully </p>`,
-          type: 'success',
-          duration: 4000,
-          dismissible: true,
-        })
-        this.getWorkGroupMethod()
-      } catch (err) {
-        this.loading = false
-        let errorMessage = ''
-
-        this.isLoading = false
-
-        // Network Error
-        if (String(err).includes('Network')) {
-          errorMessage = err
-          this.$toast.open({
-            message: `<p class="toast-title">Error</p>
-                    <p class="toast-msg"> Network Error </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-          return
-        }
-
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response.data
-
-          errorMessage = res.errorMessage
-
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      }
-    },
-    async getWorkGroupMethod() {
-      const user = JSON.parse(localStorage.getItem('user'))
-      const params = { ...this.contextSearchObject, currentPage: this.page }
-      const config = {
-        headers: { Authorization: `Bearer ${user.token}` },
-        params,
-      }
-      this.loadingTable = true
-      try {
-        const { response } = await this.$axios.$get(
-          '/workFlowGroup/getAllWorkGroup',
-          config
-        )
-        this.dataSource = response
-        this.totalElements = response.totalElements || 0
-        this.loadingTable = false
-      } catch (err) {
-        this.loadingTable = false
-        let errorMessage = ''
-
-        // Network Error
-        if (String(err).includes('Network')) {
-          errorMessage = err
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> Network Error </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-          return
-        }
-
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response.data
-
-          errorMessage = res.errorMessage
-
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      }
+      this.isModalVisible = false
+      this.counter++
     },
   },
 }

@@ -17,9 +17,9 @@
                   <a
                     href="javascript:;"
                     style="color: #8c9090; font-size: 13px"
-                    @click="$emit('editRole', record)"
+                    @click="$emit('editWorkGroup', record)"
                   >
-                    <a-icon type="edit" />&nbsp; Edit Role
+                    <a-icon type="edit" />&nbsp; Edit Work Group
                   </a>
                 </a-menu-item>
                 <a-menu-item>
@@ -28,7 +28,7 @@
                     style="color: #f00; font-size: 13px"
                     @click="showDeleteConfirm(record)"
                   >
-                    <a-icon type="delete" />&nbsp; Delete Role
+                    <a-icon type="delete" />&nbsp; Delete Work Group
                   </a>
                 </a-menu-item>
               </a-menu>
@@ -52,7 +52,7 @@
 import AppPagination from '@/components/UI/AppPagination'
 
 export default {
-  name: 'AppRolesTable',
+  name: 'AppWorkGroupTable',
   components: {
     AppPagination,
   },
@@ -71,12 +71,20 @@ export default {
     columns() {
       const columns = [
         {
-          title: 'Role Name',
-          dataIndex: 'roleName',
+          title: 'Group Id',
+          dataIndex: 'groupId',
         },
         {
-          title: 'Role Description',
-          dataIndex: 'description',
+          title: 'Flow',
+          dataIndex: 'userWorkFlow',
+        },
+        {
+          title: 'Group Description',
+          dataIndex: 'groupDescription',
+        },
+        {
+          title: 'Flow Description',
+          dataIndex: 'userWorkFlowDescription',
         },
         {
           title: '',
@@ -128,7 +136,7 @@ export default {
       this.loading = true
       try {
         const { response } = await this.$axios.$get(
-          '/role/rolesPaginated',
+          '/workFlowGroup/getAllWorkGroup',
           config
         )
         this.dataSource = response.content
@@ -158,7 +166,7 @@ export default {
       const $this = this
       this.$confirm({
         title:
-          'Are you sure you want to delete this Role? This action is irreversible.',
+          'Are you sure you want to delete this Workgroup? This action is irreversible.',
         okText: 'Yes',
         okType: 'danger',
         cancelText: 'No',
@@ -166,13 +174,13 @@ export default {
           // vm.showModal(false)
           try {
             await $this.$axios.$delete(
-              `/role/deleteRoleByNameAndResourceType?roleName=${record.roleName}`,
+              `/workFlowGroup/deleteWorkFlowGroupByUserWorkFLow?userWorkFlow=${record.userWorkFlow}&workGroupFLow=${record.workGroupFLow}`,
               config
             )
             $this.loading = false
             $this.$notification.success({
               message: 'Success',
-              description: `Role ${record.roleName} Deleted Successfully `,
+              description: `Workgroup ${record.userWorkFlow} Deleted Successfully `,
             })
             const contextSearchObject = {
               currentPage: 0,

@@ -3,41 +3,71 @@
     <a-form>
       <ValidationObserver ref="observer" tag="div">
         <a-row type="flex" :gutter="16">
-          <a-col :span="24">
+          <a-col :span="12">
             <AppInput
-              v-model="roleObject.roleName"
-              label="Role Name"
-              placeholder="Enter Role Name"
+              v-model="workGroupObject.order"
+              label="Order"
+              is-number
+              placeholder="order"
+              required
+              :disabled="!isCreateOnly"
+              rules="required"
+            />
+          </a-col>
+          <a-col :span="12">
+            <AppInput
+              v-model="workGroupObject.userWorkFlow"
+              label="User WorkFlow"
+              placeholder="Enter User’s WorkFlow"
               required
               rules="required"
             />
           </a-col>
           <a-col :span="24">
             <AppTextArea
-              v-model="roleObject.description"
-              label="Role Description"
-              placeholder="Enter Role Description"
+              v-model="workGroupObject.userWorkFlowDescription"
+              label="WorkFlow Description"
+              placeholder="Enter WorkFlow Description"
               :rows="1"
               required
+              rules="required"
+            />
+          </a-col>
+          <a-col :span="12">
+            <AppSwitchComponent
+              v-model="workGroupObject.freeWorkFlow"
+              label="Free WorkFlow ?"
+            />
+          </a-col>
+          <a-col :span="12">
+            <AppSelect
+              v-model="workGroupObject.groupId"
+              url="/systemConfiguration/resourceKeys"
+              :call-back-func="
+                (resp) => ({
+                  text: resp,
+                  value: resp,
+                })
+              "
+              label="Group Id"
+              placeholder="GroupId"
+              :disabled="!isCreateOnly"
+              required
+              rules="required"
             />
           </a-col>
           <a-col :span="24">
-            <AppSwitchComponent v-model="roleObject.isAdmin" label="Is Admin" />
-          </a-col>
-          <a-col :span="24">
-            <AppMultiSelectComponent
-              v-model="roleObject.addPermissions"
-              label="Permissions"
-              placeholder="Please Select Permissions"
-              :is-admin="roleObject.isAdmin"
-              required
-              @removedRecord="getDeletedrecords"
+            <AppTextArea
+              v-model="workGroupObject.groupDescription"
+              label="Group Description"
+              placeholder="Group Description"
+              :rows="1"
             />
           </a-col>
         </a-row>
       </ValidationObserver>
       <br />
-      <AppButton :loading="isLoading" size="large" @click="roleHandler"
+      <AppButton :loading="isLoading" size="large" @click="workGroupHandler"
         >Submit</AppButton
       >
     </a-form>
@@ -47,21 +77,21 @@
 import { ValidationObserver } from 'vee-validate'
 import AppButton from '@/components/UI/AppButton.vue'
 import AppInput from '@/components/UI/AppInput.vue'
+import AppSelect from '@/components/UI/AppSelect'
 import AppTextArea from '@/components/UI/AppTextArea'
-import AppMultiSelectComponent from '@/components/UI/AppMultiSelectComponent.vue'
 import AppSwitchComponent from '@/components/UI/AppSwitchComponent.vue'
 export default {
-  name: 'AppRolesForm',
+  name: 'AppWorkGroupForm',
   components: {
     ValidationObserver,
     AppButton,
     AppInput,
     AppSwitchComponent,
-    AppMultiSelectComponent,
     AppTextArea,
+    AppSelect,
   },
   props: {
-    currentRoleObject: {
+    currentWorkGroupObject: {
       type: Object,
       default: () => {},
     },
@@ -74,15 +104,16 @@ export default {
     return {
       isLoading: false,
       roleObject: {},
+      workGroupObject: {},
     }
   },
   watch: {
-    currentRoleObject: {
-      handler(newCurrentRoleObject) {
-        if (!newCurrentRoleObject || this.mode === 'CREATE_MODE') {
-          this.roleObject = {}
+    currentWorkGroupObject: {
+      handler(newCurrentWorkGroupObject) {
+        if (!newCurrentWorkGroupObject || this.mode === 'CREATE_MODE') {
+          this.workGroupObject = {}
         } else {
-          this.roleObject = { ...newCurrentRoleObject }
+          this.workGroupObject = { ...newCurrentWorkGroupObject }
         }
       },
       immediate: true,
@@ -90,12 +121,7 @@ export default {
     },
   },
   methods: {
-    getDeletedrecords(record) {
-      if (record) {
-        this.deletedPermissions.push({ permSysName: record })
-      }
-    },
-    async roleHandler() {
+    async workGroupHandler() {
       const isValid = await this.$refs.observer.validate()
       if (!isValid) {
         return
@@ -107,24 +133,24 @@ export default {
       this.isLoading = true
       try {
         if (this.mode === 'CREATE_MODE') {
-          await this.$axios.$post('/role', this.roleObject, config)
+          await this.$axios.$post('/workFlowGroup', this.roleObject, config)
           this.$notification.success({
             message: 'Success',
-            description: 'Role Created Successfully ',
+            description: 'Work Group Created Successfully ',
             duration: 4000,
           })
         } else {
-          await this.$axios.$put('/role', this.roleObject, config)
+          await this.$axios.$put('/workFlowGroup', this.roleObject, config)
           this.$notification.success({
             message: 'Success',
-            description: 'Role Edited Successfully ',
+            description: 'Work Group Edited Successfully ',
             duration: 4000,
           })
         }
 
         requestAnimationFrame(() => {
           this.$refs.observer.reset()
-          this.roleObject = {}
+          this.workGroupObject = {}
           this.isLoading = false
           this.$emit('formSubmissionCompleted')
         })
