@@ -1,0 +1,28 @@
+.ant-layout-sider-children {
+  position: relative;
+  margin-top: 1rem !important;
+}
+h1 {
+  font-weight: bold !important;
+}
+.page_header {
+  display: flex;
+  justify-content: space-between;
+}
+.ant-table-content {
+  background-color: white;
+  font-family: 'GothamLight', sans-serif;
+  font-weight: bold;
+  box-shadow: 0px 0px 5px 0px #e2e2dd;
+  .ant-table-thead > tr > th {
+    background-color: white;
+    font-family: 'GothamMedium', sans-serif;
+    color: #2e434e;
+    opacity: 0.5;
+    font-weight: bold;
+    border-bottom: 1px solid #f8f8f8;
+  }
+  .ant-table-tbody > tr > td {
+    border-bottom: 1px solid #f8f8f8;
+  }
+}

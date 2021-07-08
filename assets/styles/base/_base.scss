@@ -1,0 +1,112 @@
+body {
+  background: #fff;
+  width: 100%;
+  min-height: 100vh;
+}
+a {
+  font-weight: bold;
+}
+.parent-container {
+  //width: 80%;
+  width: 100%;
+  height: 100%;
+}
+.columns {
+  margin-bottom: 0 !important;
+  .column {
+    padding-bottom: 0 !important;
+  }
+}
+label {
+  display: block;
+  font-family: 'GothamThin', sans-serif;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 150%;
+  color: #2e434e;
+  font-weight: 600;
+  // letter-spacing: 1px;
+  opacity: 0.7;
+  padding: 2px 1px;
+}
+.modal-background {
+  background-color: #51646dbd;
+}
+.vsa-list {
+  --vsa-text-color: #fdb813;
+  --vsa-bg-color: #fff;
+  --vsa-border-color: #fff;
+  --vsa-highlight-color: #fff;
+}
+.vsa-item__trigger:focus,
+.vsa-item__trigger:hover {
+  outline: none;
+  background-color: var(--vsa-highlight-color);
+  color: var(--vsa-text-color);
+}
+.vsa-item__trigger__content {
+  width: 100% !important;
+}
+
+.wrapper_container {
+  display: grid;
+  grid-template-rows: 15% auto 13%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90vw;
+  height: 95vh;
+  margin: auto;
+  background-color: #fff;
+  @include breakpoint-up(large) {
+    width: 35vw;
+    height: 80vh;
+  }
+}
+.ant-notification-notice{
+  z-index: 2000;
+}
+
+.ant-notification-notice-with-icon .ant-notification-notice-message {
+  font-family: 'GothamMedium', sans-serif;
+}
+.ant-notification-notice-description {
+  font-family: 'GothamLight', sans-serif;
+  color: #2e434e !important;
+  font-weight: 600 !important;
+}
+.ant-select-dropdown-menu-item {
+  font-family: 'GothamLight', sans-serif;
+  color: #2e434e !important;
+  font-weight: 600 !important;
+}
+.ant-radio-checked::after,
+.ant-radio-checked .ant-radio-inner,
+.ant-radio-wrapper:hover .ant-radio,
+.ant-radio:hover .ant-radio-inner,
+.ant-radio-input:focus + .ant-radio-inner {
+  border-color: $primary;
+}
+.ant-radio-input:focus + .ant-radio-inner {
+  box-shadow: none;
+}
+.ant-radio-inner::after {
+  background: $primary;
+}
+.ant-checkbox-checked::after {
+  border: none !important;
+}
+.ant-checkbox-wrapper,
+.ant-radio-wrapper {
+  padding: 0 !important;
+}
+.ant-checkbox + span {
+  padding-right: 8px;
+  padding-left: 8px;
+  color: black;
+  font-size: 13px;
+}
+.ant-modal-title,
+.ant-modal-body {
+  font-weight: bold;
+}
