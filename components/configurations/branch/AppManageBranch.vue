@@ -19,9 +19,9 @@
             label="Branch Code"
             placeholder="Enter Branch Code"
             is-number
-            :spaceAllowed="false"
-            :charAllowed="false"
-            :textAllowed="false"
+            :space-allowed="false"
+            :char-allowed="false"
+            :text-allowed="false"
             required
             rules="required"
           />

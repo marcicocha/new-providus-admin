@@ -25,7 +25,7 @@
         Work Group
       </h1>
       <AppWorkGroupForm
-        currentWorkGroupObject="currentWorkGroupObject"
+        current-work-group-object="currentWorkGroupObject"
         :mode="mode"
         @formSubmissionCompleted="closeModal"
       />

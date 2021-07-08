@@ -38,23 +38,23 @@
       </template>
     </a-table>
     <br />
-    <div class="paginationCover">
+    <!-- <div class="paginationCover">
       <AppPagination
         :default-current="0"
         :total="totalElements"
         :page-number="pageNumber"
         @change="paginationChangeHandler"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
-import AppPagination from '@/components/UI/AppPagination'
+// import AppPagination from '@/components/UI/AppPagination'
 
 export default {
   name: 'AppWorkGroupTable',
   components: {
-    AppPagination,
+    // AppPagination,
   },
   data() {
     return {
@@ -139,9 +139,10 @@ export default {
           '/workFlowGroup/getAllWorkGroup',
           config
         )
-        this.dataSource = response.content
-        this.totalElements = response.totalElements
-        this.pageNumber = response.pageable.pageNumber
+        // this.dataSource = response.content
+        this.dataSource = response
+        // this.totalElements = response.totalElements
+        // this.pageNumber = response.pageable.pageNumber
         this.loading = false
       } catch (err) {
         this.loading = false

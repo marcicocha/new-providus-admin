@@ -26,7 +26,7 @@
         Role
       </h1>
       <AppRolesForm
-        :currentRoleObject="currentRoleObject"
+        :current-role-object="currentRoleObject"
         :mode="mode"
         @formSubmissionCompleted="closeModal"
       />

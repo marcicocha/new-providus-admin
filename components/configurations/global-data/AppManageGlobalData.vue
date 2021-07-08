@@ -40,9 +40,9 @@
               v-model="globalDataObject.code"
               label="Code"
               is-number
-              :spaceAllowed="false"
-              :charAllowed="false"
-              :textAllowed="false"
+              :space-allowed="false"
+              :char-allowed="false"
+              :text-allowed="false"
               placeholder="Enter Code"
               required
               rules="required"
