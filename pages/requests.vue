@@ -76,27 +76,6 @@
             >
           </template>
         </AppTable>
-        <vue-ads-pagination :total-items="totalElements" :page="page">
-          <template slot-scope="props">
-            <div class="vue-ads-pr-2 vue-ads-leading-loose">
-              Items {{ props.start }} - {{ props.end }} of
-              {{ props.total }} items
-            </div>
-          </template>
-          <template slot="buttons" slot-scope="props" style="margin: 0px 30px">
-            <vue-ads-page-button
-              v-for="(button, key) in props.buttons"
-              :key="key"
-              v-bind="button"
-              :class="{ 'bg-yellow-dark': button.active }"
-              @page-change="pageChange(button.page)"
-              @range-change="
-                start = button.start
-                end = button.end
-              "
-            />
-          </template>
-        </vue-ads-pagination>
       </div>
       <!-- pending table -->
       <div v-show="tabsel == 'pending'">
