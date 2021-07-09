@@ -174,8 +174,12 @@ export default {
         async onOk() {
           // vm.showModal(false)
           try {
+            const { response } = await $this.$axios.$get(
+              '/systemConfiguration/resourceKeys',
+              config
+            )
             await $this.$axios.$delete(
-              `/workFlowGroup/deleteWorkFlowGroupByUserWorkFLow?userWorkFlow=${record.userWorkFlow}&workGroupFLow=${record.workGroupFLow}`,
+              `/workFlowGroup/deleteWorkFlowGroupByUserWorkFLow?userWorkFlow=${record.userWorkFlow}&workGroupFLow=${response[0]}`,
               config
             )
             $this.loading = false
