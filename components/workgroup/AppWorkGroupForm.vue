@@ -107,7 +107,9 @@ export default {
     return {
       isLoading: false,
       roleObject: {},
-      workGroupObject: {},
+      workGroupObject: {
+        freeWorkFlow: false,
+      },
     }
   },
   computed: {
@@ -119,7 +121,9 @@ export default {
     currentWorkGroupObject: {
       handler(newCurrentWorkGroupObject) {
         if (!newCurrentWorkGroupObject || this.mode === 'CREATE_MODE') {
-          this.workGroupObject = {}
+          this.workGroupObject = {
+            freeWorkFlow: false,
+          }
         } else {
           this.workGroupObject = { ...newCurrentWorkGroupObject }
         }
