@@ -147,6 +147,7 @@ export default {
       btnloading: false,
       changePasswordObject: {},
       confirmLoading: false,
+      email: '',
     }
   },
   computed: {
@@ -287,12 +288,17 @@ export default {
             username: this.email,
           },
         })
-        this.isLoading = false
-        this.toggleSignUpForm()
-        this.$$notification.success({
+
+        this.$notification.success({
           message: 'Success',
           description: 'Pasword reset was successful',
           duration: 4000,
+        })
+        requestAnimationFrame(() => {
+          this.$refs.obs2.reset()
+          this.email = ''
+          this.isLoading = false
+          this.toggleSignUpForm()
         })
       } catch (err) {
         this.isLoading = false
