@@ -56,6 +56,7 @@
         </div>
       </div>
     </div>
+    <br />
     <a-table
       :columns="columns"
       :pagination="false"
@@ -128,7 +129,7 @@ export default {
     return {
       isLoading: false,
       loading: false,
-
+      pageNumber: 0,
       mode: 'CREATE_MODE',
       contextSearchObject: {},
       isContextSearch: false,

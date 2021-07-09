@@ -62,6 +62,8 @@
         </div>
       </div>
     </div>
+    <br />
+    <br />
     <a-table
       :columns="columns"
       :pagination="false"
@@ -116,6 +118,7 @@ export default {
       loading: false,
       contextSearchObject: {},
       isContextSearch: false,
+      pageNumber: 0,
       dataSource: [],
       isModalVisible: false,
       currentDaonUserObject: {},

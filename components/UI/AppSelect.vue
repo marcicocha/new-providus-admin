@@ -128,6 +128,10 @@ export default {
       type: [Object, String],
       default: '',
     },
+    showErrors: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {

@@ -107,6 +107,11 @@ export default {
       workGroupObject: {},
     }
   },
+  computed: {
+    isCreateOnly() {
+      return this.mode === 'CREATE_MODE'
+    },
+  },
   watch: {
     currentWorkGroupObject: {
       handler(newCurrentWorkGroupObject) {
@@ -120,6 +125,7 @@ export default {
       deep: true,
     },
   },
+
   methods: {
     async workGroupHandler() {
       const isValid = await this.$refs.observer.validate()
