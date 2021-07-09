@@ -163,14 +163,14 @@ export default {
       const config = {
         headers: { Authorization: `Bearer ${user.token}` },
       }
-      if (!this.validateEmail(this.userObject.email)) {
-        this.$notification.error({
-          message: 'Warning',
-          description: 'Email Entered is Invalid',
-          duration: 4000,
-        })
-        return
-      }
+      // if (!this.validateEmail(this.userObject.email)) {
+      //   this.$notification.error({
+      //     message: 'Warning',
+      //     description: 'Email Entered is Invalid',
+      //     duration: 4000,
+      //   })
+      //   return
+      // }
       this.isLoading = true
       try {
         if (this.mode === 'CREATE_MODE') {
