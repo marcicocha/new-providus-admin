@@ -169,6 +169,7 @@ export default {
     },
     getCountryHandler() {
       const contextSearchObject = {
+        ...this.contextSearchObject,
         currentPage: 0,
       }
       this.fetchCountryHandler(contextSearchObject)

@@ -181,6 +181,7 @@ export default {
     },
     getBranchHandler() {
       const contextSearchObject = {
+        ...this.contextSearchObject,
         currentPage: 0,
       }
       this.fetchBranchHandler(contextSearchObject)

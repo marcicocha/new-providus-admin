@@ -164,6 +164,7 @@ export default {
     },
     getDaonUserHandler() {
       const contextSearchObject = {
+        ...this.contextSearchObject,
         currentPage: 0,
       }
       this.fetchDaonUserHandler(contextSearchObject)
