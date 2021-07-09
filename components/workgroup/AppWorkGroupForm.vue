@@ -8,6 +8,9 @@
               v-model="workGroupObject.order"
               label="Order"
               is-number
+              :textAllowed="false"
+              :charAllowed="false"
+              :spaceAllowed="false"
               placeholder="order"
               required
               :disabled="!isCreateOnly"
@@ -139,14 +142,18 @@ export default {
       this.isLoading = true
       try {
         if (this.mode === 'CREATE_MODE') {
-          await this.$axios.$post('/workFlowGroup', this.roleObject, config)
+          await this.$axios.$post(
+            '/workFlowGroup',
+            this.workGroupObject,
+            config
+          )
           this.$notification.success({
             message: 'Success',
-            description: 'Work Group Created Successfully ',
+            description: 'Work Group Created Successfully',
             duration: 4000,
           })
         } else {
-          await this.$axios.$put('/workFlowGroup', this.roleObject, config)
+          await this.$axios.$put('/workFlowGroup', this.workGroupObject, config)
           this.$notification.success({
             message: 'Success',
             description: 'Work Group Edited Successfully ',
