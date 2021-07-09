@@ -196,6 +196,14 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.ant-menu-item-selected {
+  a {
+    &:hover {
+      color: #2e434e !important;
+      font-weight: bold;
+    }
+  }
+}
 .ant-layout-sider {
   background: #2e434e;
   // height: 100vh;
@@ -232,8 +240,8 @@ export default {
     transition: all 0.3s;
 
     &:hover {
-      color: #2e434e;
-      background: #fdb813;
+      // color: #2e434e;
+      color: #fdb813;
       font-weight: bold;
     }
 
