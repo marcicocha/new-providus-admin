@@ -12,7 +12,11 @@
         </div>
       </a-layout-header>
       <a-layout-content
-        :style="{ margin: '24px 16px 0', 'margin-top': '5rem' }"
+        :style="{
+          margin: '24px 16px 0',
+          'margin-top': '5rem',
+          'margin-bottom': '3rem',
+        }"
       >
         <Nuxt />
       </a-layout-content>
