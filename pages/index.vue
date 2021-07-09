@@ -223,7 +223,7 @@ export default {
       }
     },
     async changePassword() {
-      const isValid = await this.$refs.observer.validate()
+      const isValid = await this.$refs.obs3.validate()
       if (!isValid) {
         return
       }
@@ -255,7 +255,7 @@ export default {
           duration: 4000,
         })
         requestAnimationFrame(() => {
-          this.$refs.observer.reset()
+          this.$refs.obs3.reset()
           this.changePasswordObject = {}
           this.loading = false
           this.btnloading = false
