@@ -1,63 +1,68 @@
 <template>
   <div class="full-input">
-    <a-form-item
-      :label="label"
-      :required="required"
-      :label-col="labelCol"
-      :wrapper-col="wrapperCol"
+    <ValidationProvider
+      :vid="$attrs.name"
+      :name="name"
+      :rules="rules"
+      tag="div"
     >
-      <!-- <label for="name">{{ label }}</label> -->
-      <a-select
-        v-model="innerValue"
-        mode="default"
-        show-search
-        style="width: 100%"
-        :loading="fetching"
-        :disabled="disabled"
-        :placeholder="placeholder"
-        :allow-clear="allowClear"
-        :default-value="defaultValue"
-        @blur="blurHandler"
-        @change="changeHandler"
-        @focus="searchHandler"
-        @select="selectHandler"
+      <a-form-item
+        slot-scope="{ errors, flags }"
+        :label="label"
+        :required="required"
+        :label-col="labelCol"
+        :wrapper-col="wrapperCol"
+        :validate-status="resolveState({ errors, flags })"
+        :help="showErrors ? errors[0] : ''"
       >
-        <template v-if="remote && dataRemote">
-          <a-select-option
-            v-for="d in dataRemote"
-            :key="d.value"
-            :title="d.text"
-            :value="d.text"
-          >
-            {{ d.text }}
-          </a-select-option>
-        </template>
-        <template v-else>
-          <template v-if="data && data.length !== ''">
+        <!-- <label for="name">{{ label }}</label> -->
+        <a-select
+          v-model="innerValue"
+          mode="default"
+          show-search
+          style="width: 100%"
+          :loading="fetching"
+          :disabled="disabled"
+          :placeholder="placeholder"
+          :allow-clear="allowClear"
+          :default-value="defaultValue"
+          @blur="blurHandler"
+          @change="changeHandler"
+          @focus="searchHandler"
+          @select="selectHandler"
+        >
+          <template v-if="remote && dataRemote">
             <a-select-option
-              v-for="(i, index) in data"
-              :key="i + '-' + index"
-              :value="i"
+              v-for="d in dataRemote"
+              :key="d.value"
+              :title="d.text"
+              :value="d.text"
             >
-              {{ i }}
+              {{ d.text }}
             </a-select-option>
           </template>
-        </template>
-      </a-select>
-    </a-form-item>
+          <template v-else>
+            <template v-if="data && data.length !== ''">
+              <a-select-option
+                v-for="(i, index) in data"
+                :key="i + '-' + index"
+                :value="i"
+              >
+                {{ i }}
+              </a-select-option>
+            </template>
+          </template>
+        </a-select>
+      </a-form-item>
+    </ValidationProvider>
   </div>
 </template>
 <script>
-import { Select, Form, notification } from 'ant-design-vue'
-import 'ant-design-vue/lib/select/style/index.less'
-import 'ant-design-vue/lib/form/style/index.less'
+import { ValidationProvider } from 'vee-validate'
+
 export default {
   name: 'AppSelect',
-  components: {
-    'a-select': Select,
-    'a-select-option': Select.Option,
-    'a-form-item': Form.Item,
-  },
+  components: { ValidationProvider },
   props: {
     value: {
       type: String,
@@ -119,6 +124,10 @@ export default {
       type: [String, Number, Array],
       default: () => '',
     },
+    rules: {
+      type: [Object, String],
+      default: '',
+    },
   },
   data() {
     return {
@@ -168,6 +177,21 @@ export default {
     selectHandler(e) {
       this.$emit('select', e)
     },
+    resolveState({ errors, flags }) {
+      if (errors[0]) {
+        return 'error'
+      }
+
+      // if (flags.pending) {
+      //   return 'validating'
+      // }
+
+      // if (flags.valid) {
+      //   return 'success'
+      // }
+
+      return ''
+    },
     fetchDataHandler(value) {
       if (this.lastFetchId > 0) {
         return
@@ -213,7 +237,7 @@ export default {
             const res = err.response
             errorMessage = res.data.errorMessage
 
-            notification.error({
+            this.$notification.error({
               message: 'Error Message',
               description: errorMessage,
               duration: 4000,

@@ -137,38 +137,15 @@ export default {
         this.remoteList = response
         this.loading = false
       } catch (err) {
-        let errorMessage = ''
-
         this.loading = false
-
-        // Network Error
-        if (String(err).includes('Network')) {
-          errorMessage = err
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> Network Error </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 0,
           })
-          return
-        }
-
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response.data
-
-          errorMessage = res.errorMessage
-
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
+        })
       }
     },
   },
