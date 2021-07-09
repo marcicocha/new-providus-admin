@@ -223,6 +223,10 @@ export default {
       }
     },
     async changePassword() {
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        return
+      }
       const user = JSON.parse(localStorage.getItem('user'))
       const config = {
         headers: { Authorization: `Bearer ${user.token}` },
@@ -231,14 +235,14 @@ export default {
         ...this.changePasswordObject,
         oldUsername: this.userDigest.username,
       }
+      this.btnloading = true
       try {
         const { response } = await this.$axios.$post(
           '/user/updateCredentials',
           payload,
           config
         )
-        this.btnloading = false
-        this.isModalVisible = false
+
         if (response.loginAgain) {
           this.goHome()
         } else {
@@ -250,7 +254,13 @@ export default {
           description: 'Password Updated Successfully',
           duration: 4000,
         })
-        this.changePasswordObject = {}
+        requestAnimationFrame(() => {
+          this.$refs.observer.reset()
+          this.changePasswordObject = {}
+          this.loading = false
+          this.btnloading = false
+          this.isModalVisible = false
+        })
       } catch (err) {
         this.btnloading = false
         const { default: errorHandler } = await import('@/utils/errorHandler')

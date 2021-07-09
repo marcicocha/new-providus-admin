@@ -19,6 +19,7 @@
         <AppCountryMain v-if="config === 'COUNTRY'" />
         <AppStateMain v-if="config === 'STATE'" />
         <AppBranchMain v-if="config === 'BRANCH'" />
+        <AppDaonMain v-if="config === 'DAON USER'" />
       </div>
     </div>
   </div>
@@ -31,7 +32,7 @@ import AppGlobalDataMain from '@/components/configurations/global-data/AppGlobal
 import AppCountryMain from '@/components/configurations/country/AppCountryMain'
 import AppStateMain from '@/components/configurations/state/AppStateMain'
 import AppBranchMain from '@/components/configurations/branch/AppBranchMain'
-
+import AppDaonMain from '@/components/configurations/daon/AppDaonMain'
 export default {
   components: {
     AppContextSelect,
@@ -41,6 +42,7 @@ export default {
     AppCountryMain,
     AppStateMain,
     AppBranchMain,
+    AppDaonMain,
   },
   data() {
     return {
@@ -52,16 +54,13 @@ export default {
         'COUNTRY',
         'STATE',
         'BRANCH',
+        'DAON USER',
       ],
     }
   },
 }
 </script>
 <style lang="scss" scoped>
-.configuration_container {
-  // padding: 15px;
-  // background-color: white;
-}
 .page_header {
   margin-bottom: 25px;
   h1 {
