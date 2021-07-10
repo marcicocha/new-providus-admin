@@ -94,7 +94,7 @@
     </div>
     <AppManageDaon
       :is-modal-visible="isModalVisible"
-      :currentDaonUserObject="currentDaonUserObject"
+      :current-daon-user-object="currentDaonUserObject"
       @closeModal="closeModal"
     />
   </div>

@@ -8,9 +8,9 @@
               v-model="workGroupObject.order"
               label="Order"
               is-number
-              :textAllowed="false"
-              :charAllowed="false"
-              :spaceAllowed="false"
+              :text-allowed="false"
+              :char-allowed="false"
+              :space-allowed="false"
               placeholder="order"
               required
               :disabled="!isCreateOnly"
