@@ -14,19 +14,19 @@
           </div>
           <footer class="card-footer">
             <p>Utility Bill</p>
-            <div class="dropdown is-hoverable action-btn">
-              <div class="dropdown-trigger">
-                <i
-                  class="custom-table-btn fas fa-ellipsis-v"
-                  aria-controls="dropdown-menu"
-                >
-                </i>
-              </div>
-              <div id="dropdown-menu" class="dropdown-menu" role="menu">
-                <div class="dropdown-content">
+            <a-dropdown>
+              <i
+                class="custom-table-btn fas fa-ellipsis-v"
+                aria-controls="dropdown-menu"
+              >
+              </i>
+              <a-menu slot="overlay">
+                <a-menu-item>
                   <a class="dropdown-item" @click="printMethod('utility')">
                     <i class="fas fa-print" /> Print
                   </a>
+                </a-menu-item>
+                <a-menu-item>
                   <a
                     class="dropdown-item"
                     @click="
@@ -38,9 +38,9 @@
                   >
                     <i class="fas fa-eye" /> View
                   </a>
-                </div>
-              </div>
-            </div>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
           </footer>
         </div>
       </a-col>
@@ -56,19 +56,19 @@
           </div>
           <footer class="card-footer">
             <p>ID Card</p>
-            <div class="dropdown is-hoverable action-btn">
-              <div class="dropdown-trigger">
-                <i
-                  class="custom-table-btn fas fa-ellipsis-v"
-                  aria-controls="dropdown-menu"
-                >
-                </i>
-              </div>
-              <div id="dropdown-menu" class="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                  <a class="dropdown-item" @click="printMethod('idCard')">
+            <a-dropdown>
+              <i
+                class="custom-table-btn fas fa-ellipsis-v"
+                aria-controls="dropdown-menu"
+              >
+              </i>
+              <a-menu slot="overlay">
+                <a-menu-item
+                  ><a @click="printMethod('idCard')">
                     <i class="fas fa-print" /> Print
-                  </a>
+                  </a></a-menu-item
+                >
+                <a-menu-item>
                   <a
                     class="dropdown-item"
                     @click="
@@ -80,9 +80,9 @@
                   >
                     <i class="fas fa-eye" /> View
                   </a>
-                </div>
-              </div>
-            </div>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
           </footer>
         </div>
       </a-col>
@@ -98,19 +98,19 @@
           </div>
           <footer class="card-footer">
             <p>Signature</p>
-            <div class="dropdown is-hoverable action-btn">
-              <div class="dropdown-trigger">
-                <i
-                  class="custom-table-btn fas fa-ellipsis-v"
-                  aria-controls="dropdown-menu"
-                >
-                </i>
-              </div>
-              <div id="dropdown-menu" class="dropdown-menu" role="menu">
-                <div class="dropdown-content">
+            <a-dropdown>
+              <i
+                class="custom-table-btn fas fa-ellipsis-v"
+                aria-controls="dropdown-menu"
+              >
+              </i>
+              <a-menu slot="overlay">
+                <a-menu-item>
                   <a class="dropdown-item" @click="printMethod('signature')">
                     <i class="fas fa-pencil-alt" /> Print
                   </a>
+                </a-menu-item>
+                <a-menu-item>
                   <a
                     class="dropdown-item"
                     @click="
@@ -122,20 +122,29 @@
                   >
                     <i class="fas fa-eye" /> View
                   </a>
-                </div>
-              </div>
-            </div>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
           </footer>
         </div>
       </a-col>
     </a-row>
-    <div v-if="previewSrc" class="previewContainer">
-      <h2>Previewing {{ previewTitle }}</h2>
-      <hr />
-      <div class="image-wrapper">
-        <img :src="previewSrc" class="previewSrc" alt="" />
+    <a-modal
+      :visible="previewIsVisible"
+      :footer="null"
+      :destroy-on-close="true"
+      :dialog-style="{ top: '20px' }"
+      width="80%"
+      @cancel="closePreviewDrawer"
+    >
+      <div class="previewContainer">
+        <h2>Previewing {{ previewTitle }}</h2>
+        <hr />
+        <div class="image-wrapper">
+          <img :src="previewSrc" class="previewSrc" alt="" />
+        </div>
       </div>
-    </div>
+    </a-modal>
   </div>
 </template>
 
@@ -152,6 +161,7 @@ export default {
     return {
       previewSrc: '',
       previewTitle: '',
+      previewIsVisible: false,
     }
   },
   computed: {
@@ -163,10 +173,14 @@ export default {
     previewImages(imageSorce, action) {
       this.previewSrc = imageSorce
       this.previewTitle = action
+      this.previewIsVisible = true
     },
     printMethod(imgId) {
       // const utilityPrint = document.getElementById('utility')
       this.$htmlToPaper(imgId)
+    },
+    closePreviewDrawer() {
+      this.previewIsVisible = false
     },
   },
 }
