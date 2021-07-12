@@ -26,6 +26,7 @@
     <AppManageRequest
       :visible="visible"
       :user-object="userObject"
+      :pendingSpinner="pendingSpinner"
       @closeDrawer="closeDrawer"
     />
     <div>
@@ -259,22 +260,25 @@ li {
       // }
       .link-wrapper {
         margin-top: 15px;
-        padding-left: 5%;
-        ul li {
-          //   background: yellow;
-          margin: 0px;
-          padding: 15px 10px;
-          cursor: pointer;
-          font-family: GothamMedium;
-          font-style: normal;
-          font-weight: 500;
-          font-size: 14px;
-          line-height: 100%;
-          color: #2e434e;
-          transition: all 0.5s;
+        ul {
+          list-style-type: none;
+          padding-left: 0;
+          li {
+            //   background: yellow;
+            margin: 0px;
+            padding: 15px 10px;
+            cursor: pointer;
+            font-family: GothamMedium;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 100%;
+            color: #2e434e;
+            transition: all 0.5s;
 
-          &:hover {
-            background: #eff3f6;
+            &:hover {
+              background: #eff3f6;
+            }
           }
         }
       }

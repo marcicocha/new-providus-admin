@@ -1,80 +1,52 @@
 <template>
   <div>
     <h1>{{ actionComputed === 'ACCEPT' ? 'Accept' : 'Reject' }} Application</h1>
-    <hr />
+    <a-divider />
     <p>Add Comment Below</p>
     <div class="">
-      <!-- <div class="column is-full">
-        <label class="checkbox">
-          <input type="checkbox" />
-          Reason 2
-        </label>
-      </div>
-      <div class="column is-full">
-        <label class="checkbox">
-          <input type="checkbox" />
-          Reason 3
-        </label>
-      </div>
-      <div class="column is-full">
-        <label class="checkbox">
-          <input type="checkbox" />
-          Reason 4
-        </label>
-      </div>
-      <div class="column is-full">
-        <label class="checkbox">
-          <input type="checkbox" />
-          Reason 5
-        </label>
-      </div>
-      <div class="column is-full">
-        <label class="checkbox">
-          <input type="checkbox" />
-          Other
-        </label>
-      </div> -->
-      <div class="column is-full">
+      <div>
         <div class="field">
           <div class="control">
-            <textarea
+            <AppTextArea
               v-model="payloadObject.comment"
               class="textarea"
               placeholder="Type in comments here"
               rows="10"
-            ></textarea>
+            ></AppTextArea>
           </div>
         </div>
       </div>
-      <div class="button-wrapper columns is-multiline">
-        <div class="column">
+      <a-row type="flex" :gutter="16" class="button-wrapper">
+        <a-col :span="12">
           <AppButton
             class="custom-btn"
-            title="Submit"
-            style="padding: 15px; width: 100%"
-            color="dark"
+            style="width: 100%"
             @click="acceptRejectHandler(actionComputed)"
-          />
-        </div>
-        <div class="column">
+            >Submit</AppButton
+          >
+        </a-col>
+        <a-col :span="12">
           <AppButton
             class="custom-btn"
-            title="Cancel"
-            style="padding: 15px; width: 100%"
-            color="dark-outline"
+            style="width: 100%"
+            ghost
+            type="danger"
             @click="cancelFunc"
-          />
-        </div>
-      </div>
+            >Cancel</AppButton
+          >
+        </a-col>
+      </a-row>
     </div>
   </div>
 </template>
 <script>
 import AppButton from '@/components/UI/AppButton.vue'
+import AppTextArea from '@/components/UI/AppTextArea'
 export default {
   name: 'AppAcceptRejectComponent',
   components: {
     AppButton,
+    AppTextArea,
   },
   props: {
     action: {
@@ -124,47 +96,22 @@ export default {
             payload,
             config
           )
-          this.$toast.open({
-            message: `<p class="toast-title">Success</p>
-                    <p class="toast-msg"> ${response} </p>`,
-            type: 'success',
+          this.$notification.success({
+            message: 'Success',
+            description: response,
             duration: 4000,
-            dismissible: true,
           })
           this.$emit('success')
         } catch (err) {
-          let errorMessage = ''
-
           this.isLoading = false
-
-          // Network Error
-          if (String(err).includes('Network')) {
-            errorMessage = err
-            this.$toast.open({
-              message: `<p class="toast-title">Error</p>
-                    <p class="toast-msg"> Network Error </p>`,
-              type: 'error',
-              duration: 10000,
-              dismissible: true,
+          const { default: errorHandler } = await import('@/utils/errorHandler')
+          errorHandler(err).forEach((msg) => {
+            this.$notification.error({
+              message: 'Error',
+              description: msg,
+              duration: 0,
             })
-            return
-          }
-
-          // Error Message from Backend
-          // eslint-disable-next-line no-prototype-builtins
-          if (err.hasOwnProperty('response')) {
-            const res = err.response.data
-
-            errorMessage = res.errorMessage
-
-            this.$toast.open({
-              message: `<p class="toast-title">Error</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-              type: 'error',
-              duration: 10000,
-              dismissible: true,
-            })
-          }
+          })
         }
       }
     },
@@ -181,47 +128,23 @@ export default {
             payload,
             config
           )
-          this.$toast.open({
-            message: `<p class="toast-title">Success</p>
-                    <p class="toast-msg"> ${response} </p>`,
-            type: 'success',
-            duration: 10000,
-            dismissible: true,
+          this.$notification.success({
+            message: 'Success',
+            description: response,
+            duration: 4000,
           })
           this.$emit('success')
         } catch (err) {
-          let errorMessage = ''
-
           this.isLoading = false
 
-          // Network Error
-          if (String(err).includes('Network')) {
-            errorMessage = err
-            this.$toast.open({
-              message: `<p class="toast-title">Error</p>
-                    <p class="toast-msg"> Network Error </p>`,
-              type: 'error',
-              duration: 10000,
-              dismissible: true,
+          const { default: errorHandler } = await import('@/utils/errorHandler')
+          errorHandler(err).forEach((msg) => {
+            this.$notification.error({
+              message: 'Error',
+              description: msg,
+              duration: 0,
             })
-            return
-          }
-
-          // Error Message from Backend
-          // eslint-disable-next-line no-prototype-builtins
-          if (err.hasOwnProperty('response')) {
-            const res = err.response.data
-
-            errorMessage = res.errorMessage
-
-            this.$toast.open({
-              message: `<p class="toast-title">Error</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-              type: 'error',
-              duration: 10000,
-              dismissible: true,
-            })
-          }
+          })
         }
       }
     },

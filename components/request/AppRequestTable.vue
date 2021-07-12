@@ -82,11 +82,11 @@
         <span
           class="status"
           :style="
-            record.status === 'Pending'
+            record.status === 'PENDING'
               ? 'background: #FFFCE6; color: #A19101'
-              : record.status === 'Approved'
+              : record.status === 'APPROVED'
               ? 'background: #D2F9D9; color: #18C139'
-              : record.status === 'Rejected'
+              : record.status === 'REJECTED'
               ? 'background: #FDF7F7; color: #CC4C4C'
               : ''
           "
@@ -94,17 +94,17 @@
         >
       </template>
       <template slot="actions" slot-scope="text, record">
-        <div style="text-align: right">
-          <a
-            v-if="record.status === 'Pending'"
-            href="javascript:;"
-            style="color: #8c9090; font-size: 13px"
+        <div>
+          <a-button
+            v-if="record.status === 'PENDING'"
+            type="primary"
+            style="font-weight: bold"
             @click="$emit('reviewRequest', record)"
           >
             REVIEW
-          </a>
+          </a-button>
           <a
-            v-if="record.status === 'Approved' || record.status === 'Rejected'"
+            v-if="record.status === 'APPROVED' || record.status === 'REJECTED'"
             href="javascript:;"
             style="color: #8c9090; font-size: 13px"
             @click="$emit('fetchCommentHandler', record.requestId)"
@@ -180,11 +180,11 @@ export default {
           title: 'Initiator ID',
           dataIndex: 'createdBy',
         },
-        {
-          title: '',
-          dataIndex: 'actions',
-          scopedSlots: { customRender: 'actions' },
-        },
+        // {
+        //   title: '',
+        //   dataIndex: 'actions',
+        //   scopedSlots: { customRender: 'actions' },
+        // },
       ]
       const pendingColumns = [
         {

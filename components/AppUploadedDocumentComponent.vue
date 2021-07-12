@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>Uploaded Documents</h1>
-    <div class="columns is-multiline">
-      <div class="column is-one-third">
+    <a-row type="flex" :gutter="16">
+      <a-col :span="8">
         <div class="card">
           <div class="card-content">
             <div id="utility" class="content">
@@ -43,8 +43,8 @@
             </div>
           </footer>
         </div>
-      </div>
-      <div class="column is-one-third">
+      </a-col>
+      <a-col :span="8">
         <div class="card">
           <div class="card-content">
             <div id="idCard" class="content">
@@ -85,8 +85,8 @@
             </div>
           </footer>
         </div>
-      </div>
-      <div class="column is-one-third">
+      </a-col>
+      <a-col :span="8">
         <div class="card">
           <div class="card-content">
             <div id="signature" class="content">
@@ -127,8 +127,8 @@
             </div>
           </footer>
         </div>
-      </div>
-    </div>
+      </a-col>
+    </a-row>
     <div v-if="previewSrc" class="previewContainer">
       <h2>Previewing {{ previewTitle }}</h2>
       <hr />

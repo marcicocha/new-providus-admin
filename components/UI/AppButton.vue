@@ -6,6 +6,7 @@
     :loading="loading"
     :block="block"
     :disabled="disabled"
+    :ghost="ghost"
     @click="$emit('click', $event)"
   >
     <slot></slot>
@@ -49,6 +50,10 @@ export default {
       default: false,
     },
     outlined: {
+      type: Boolean,
+      default: false,
+    },
+    ghost: {
       type: Boolean,
       default: false,
     },

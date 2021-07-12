@@ -1,87 +1,82 @@
 <template>
   <div>
-    <a-drawer
+    <a-modal
       :visible="visible"
       :closable="false"
+      :footer="null"
       :destroy-on-close="true"
-      width="70%"
-      @close="closeDrawer"
+      :dialog-style="{ top: '20px' }"
+      width="80%"
+      @cancel="closeDrawer"
     >
-      <a-row type="flex" :gutter="16">
-        <a-col :span="6">
-          <div class="card image-wrapper">
-            <div class="card-image">
-              <figure class="image is-5by3" style="text-align: center">
-                <img
-                  :src="`data:image/png;base64, ${userObject.selfie}`"
-                  alt="Placeholder image"
-                  class="selfie"
-                />
-                <span>R</span>
-              </figure>
+      <div v-if="pendingSpinner" class="loader">
+        <i class="fas fa-spinner fa-pulse" style="color: #fdb813"></i>
+      </div>
+      <div>
+        <a-row type="flex" :gutter="16">
+          <a-col :span="6">
+            <div class="card image-wrapper">
+              <div class="card-image">
+                <figure style="width: 100%">
+                  <img
+                    :src="`data:image/png;base64, ${userObject.selfie}`"
+                    alt="Placeholder image"
+                    class="selfie"
+                    style="width: 100%"
+                  />
+                </figure>
+              </div>
             </div>
-          </div>
-          <div class="link-wrapper">
-            <ul>
-              <li
-                :class="{ 'is-toggle-active': isProspect }"
-                @click="toggleMethod('prospect')"
-              >
-                Prospect Information
-              </li>
-              <li
-                :class="{ 'is-toggle-active': isUploaded }"
-                @click="toggleMethod('upload')"
-              >
-                Uploaded
-              </li>
-            </ul>
-          </div>
-          <div
-            class="button-wrapper columns is-multiline"
-            :style="operation ? 'opacity: 0' : ''"
-          >
-            <div class="column">
-              <AppButton
-                class="custom-btn"
-                title="Reject"
-                style="padding: 10px; width: 100%"
-                color="red-outline"
-                @click="toggleMethod('REJECT')"
-              />
+            <div class="link-wrapper">
+              <ul>
+                <li
+                  :class="{ 'is-toggle-active': isProspect }"
+                  @click="toggleMethod('prospect')"
+                >
+                  Prospect Information
+                </li>
+                <li
+                  :class="{ 'is-toggle-active': isUploaded }"
+                  @click="toggleMethod('upload')"
+                >
+                  Uploaded
+                </li>
+              </ul>
             </div>
-            <div class="column">
-              <AppButton
-                class="custom-btn"
-                title="Accept"
-                style="padding: 10px; width: 100%"
-                color="success"
-                @click="toggleMethod('ACCEPT')"
-              />
-            </div>
-          </div>
-        </a-col>
-        <a-col :span="18">
-          <AppAccountDetailsComponent
-            v-if="isProspect"
-            :user-object="userObject"
-            style="width: 100%"
-          />
-          <AppUploadedDocumentComponent
-            v-if="isUploaded"
-            :user-object="userObject"
-          />
-          <AppAcceptRejectComponent
-            v-if="operation"
-            style="padding: 0px 200px"
-            :action="operation"
-            :request-id="userObject.requestId ? userObject.requestId : ''"
-            @success="closeModal('success')"
-            @cancel="toggleMethod('prospect')"
-          />
-        </a-col>
-      </a-row>
-    </a-drawer>
+            <br />
+            <a-row type="flex" :gutter="16">
+              <a-col :span="12">
+                <AppButton ghost type="danger" @click="toggleMethod('REJECT')"
+                  >Reject</AppButton
+                >
+              </a-col>
+              <a-col :span="12">
+                <AppButton @click="toggleMethod('ACCEPT')">Accept</AppButton>
+              </a-col>
+            </a-row>
+          </a-col>
+          <a-col :span="18">
+            <AppAccountDetailsComponent
+              v-if="isProspect"
+              :user-object="userObject"
+              style="width: 100%"
+            />
+            <AppUploadedDocumentComponent
+              v-if="isUploaded"
+              :user-object="userObject"
+            />
+            <AppAcceptRejectComponent
+              v-if="operation"
+              style="padding: 0px 200px"
+              :action="operation"
+              :request-id="userObject.requestId ? userObject.requestId : ''"
+              @success="closeModal('success')"
+              @cancel="toggleMethod('prospect')"
+            />
+          </a-col>
+        </a-row>
+      </div>
+    </a-modal>
   </div>
 </template>
 <script>
@@ -105,6 +100,10 @@ export default {
     userObject: {
       type: Object,
       default: () => {},
+    },
+    pendingSpinner: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -138,3 +137,45 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.link-wrapper {
+  margin-top: 15px;
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+    li {
+      //   background: yellow;
+      margin: 0px;
+      padding: 15px 10px;
+      cursor: pointer;
+      font-family: GothamMedium;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 100%;
+      color: #2e434e;
+      transition: all 0.5s;
+
+      &:hover {
+        background: #eff3f6;
+      }
+    }
+  }
+}
+.is-toggle-active {
+  background: #eff3f6;
+}
+.loader {
+  position: absolute;
+  display: flex;
+  width: 90%;
+  height: 90%;
+  background: rgba(255, 255, 255, 0.589);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  i {
+    font-size: 350%;
+  }
+}
+</style>
