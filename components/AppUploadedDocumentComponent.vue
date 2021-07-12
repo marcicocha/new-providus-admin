@@ -128,6 +128,92 @@
           </footer>
         </div>
       </a-col>
+      <a-col :span="8">
+        <div class="card">
+          <div class="card-content">
+            <div id="signature" class="content">
+              <img
+                :src="`data:image/png;base64,` + userObjectComputed.reference1"
+                alt=""
+              />
+            </div>
+          </div>
+          <footer class="card-footer">
+            <p>Reference 1</p>
+            <a-dropdown>
+              <i
+                class="custom-table-btn fas fa-ellipsis-v"
+                aria-controls="dropdown-menu"
+              >
+              </i>
+              <a-menu slot="overlay">
+                <a-menu-item>
+                  <a class="dropdown-item" @click="printMethod('signature')">
+                    <i class="fas fa-pencil-alt" /> Print
+                  </a>
+                </a-menu-item>
+                <a-menu-item>
+                  <a
+                    class="dropdown-item"
+                    @click="
+                      previewImages(
+                        `data:image/jpg;base64,` +
+                          userObjectComputed.reference1,
+                        'Signature'
+                      )
+                    "
+                  >
+                    <i class="fas fa-eye" /> View
+                  </a>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
+          </footer>
+        </div>
+      </a-col>
+      <a-col :span="8">
+        <div class="card">
+          <div class="card-content">
+            <div id="signature" class="content">
+              <img
+                :src="`data:image/png;base64,` + userObjectComputed.reference2"
+                alt=""
+              />
+            </div>
+          </div>
+          <footer class="card-footer">
+            <p>Reference 1</p>
+            <a-dropdown>
+              <i
+                class="custom-table-btn fas fa-ellipsis-v"
+                aria-controls="dropdown-menu"
+              >
+              </i>
+              <a-menu slot="overlay">
+                <a-menu-item>
+                  <a class="dropdown-item" @click="printMethod('signature')">
+                    <i class="fas fa-pencil-alt" /> Print
+                  </a>
+                </a-menu-item>
+                <a-menu-item>
+                  <a
+                    class="dropdown-item"
+                    @click="
+                      previewImages(
+                        `data:image/jpg;base64,` +
+                          userObjectComputed.reference2,
+                        'Signature'
+                      )
+                    "
+                  >
+                    <i class="fas fa-eye" /> View
+                  </a>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
+          </footer>
+        </div>
+      </a-col>
     </a-row>
     <a-modal
       :visible="previewIsVisible"

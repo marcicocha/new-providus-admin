@@ -24,7 +24,11 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/antd-ui', '@/plugins/veevalidate.js'],
+  plugins: [
+    '@/plugins/antd-ui',
+    '@/plugins/veevalidate.js',
+    { src: '~/plugins/printHtml.js', ssr: false },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
