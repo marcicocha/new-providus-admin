@@ -280,25 +280,22 @@
         alt=""
       />
       <br />
-      <object>
-        <embed
-          id="pdfID"
-          type="text/html"
-          width="100%"
-          height="100%"
-          :src="`data:application/pdf;base64,` + userObjectComputed.reference1"
-        />
-      </object>
-      <br />
-      <object>
-        <embed
-          id="pdfID"
-          type="text/html"
-          width="100%"
-          height="100%"
-          :src="`data:application/pdf;base64,` + userObjectComputed.reference2"
-        />
-      </object>
+      <!-- <embed
+        id="pdfID"
+        type="application/pdf"
+        width="100%"
+        height="100%"
+        :src="`data:application/pdf;base64,` + userObjectComputed.reference1"
+      />
+      <br /> -->
+      <!-- 
+      <embed
+        id="pdfID"
+        type="application/pdf"
+        width="100%"
+        height="100%"
+        :src="`data:application/pdf;base64,` + userObjectComputed.reference2"
+      /> -->
     </div>
   </div>
 </template>
@@ -338,17 +335,17 @@ export default {
     printMethod(imgId) {
       // const utilityPrint = document.getElementById('utility')
       this.$htmlToPaper(imgId)
-      // printJS({
-      //   printable: imgSrc,
-      //   type,
-      //   base64: true,
-      // })
     },
     closePreviewDrawer() {
       this.previewIsVisible = false
     },
-    async printAllHandler() {
-      await this.$htmlToPaper('printAll')
+    blobHandler(base64) {
+      const fileURL = window.URL.createObjectURL(new Blob([base64]))
+      console.log(fileURL, 'FILE URL')
+      return fileURL
+    },
+    printAllHandler() {
+      this.$htmlToPaper('printAll')
     },
   },
 }

@@ -19,6 +19,11 @@
         <div v-if="loading" class="list-shade">
           <i class="fas fa-spinner fa-pulse" style="color: #fdb813"></i>
         </div>
+        <a-checkbox
+          style="margin-left: 0.5rem; margin-bottom: 0.5rem"
+          @change="onChange"
+          >Check All</a-checkbox
+        >
         <ul>
           <li
             v-for="(data, i) in remoteList"
@@ -109,6 +114,13 @@ export default {
     this.searchMethod(this.isAdmin)
   },
   methods: {
+    onChange(e) {
+      if (e.target.checked) {
+        this.selectedList = [...this.remoteList]
+      } else {
+        this.selectedList = []
+      }
+    },
     isSelectedMethod(record) {
       return this.selectedList.includes(record)
     },
@@ -190,15 +202,19 @@ export default {
     overflow-y: scroll;
     overflow-x: hidden;
     position: relative;
-    ul li {
-      padding: 5px 10px;
-      transition: all 0.5s;
-      i {
-        display: none;
-      }
-      &:hover {
-        background: #f8f8f8;
-        cursor: pointer;
+    ul {
+      padding-left: 0;
+      list-style-type: none;
+      li {
+        padding: 5px 10px;
+        transition: all 0.5s;
+        i {
+          display: none;
+        }
+        &:hover {
+          background: #f8f8f8;
+          cursor: pointer;
+        }
       }
     }
     .list-shade {

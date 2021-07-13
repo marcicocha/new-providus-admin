@@ -5447,9 +5447,9 @@ html-webpack-plugin@^4.5.1:
     util.promisify "1.0.0"
 
 html2canvas@^1.0.0-alpha.12:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/html2canvas/-/html2canvas-1.1.1.tgz#f36d85fca796a7871428a8d0546f4c4cf210aef3"
-  integrity sha512-e2AFvL3/rnq5YH0TMMda8MMpZkKBw04u8PxRQoUFToFTvGfjdUF+aYe887NaZjthiiclBXiSe/vWO/sCLYchPQ==
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/html2canvas/-/html2canvas-1.1.2.tgz#a0a93cb8289fb27291418bb2a88b6a2fe1fc5e47"
+  integrity sha512-rjtP4RbTTKbsbSs3cvska2K/V+cmiShY+9ADBb4JpLotREM3AjYdpF1SARCf3TQDqnuCFJeFZWyp/KTvpKZjAA==
   dependencies:
     css-line-break "1.1.1"
 
@@ -8524,6 +8524,11 @@ pretty-time@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pretty-time/-/pretty-time-1.1.0.tgz#ffb7429afabb8535c346a34e41873adf3d74dd0e"
   integrity sha512-28iF6xPQrP8Oa6uxE6a1biz+lWeTOAPKggvjB8HAs6nVMKZwf5bG++632Dx614hIWgUPkgivRfG+a8uAXGTIbA==
+
+print-js@^1.5.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/print-js/-/print-js-1.6.0.tgz#692b046cf31992b46afa6c6d8a9db1c69d431d1f"
+  integrity sha512-BfnOIzSKbqGRtO4o0rnj/K3681BSd2QUrsIZy/+WdCIugjIswjmx3lDEZpXB2ruGf9d4b3YNINri81+J0FsBWg==
 
 process-nextick-args@~2.0.0:
   version "2.0.1"
