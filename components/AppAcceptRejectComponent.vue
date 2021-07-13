@@ -12,6 +12,7 @@
               class="textarea"
               placeholder="Type in comments here"
               :rows="10"
+              :required="action === 'REJECT'"
             ></AppTextArea>
           </div>
         </div>
