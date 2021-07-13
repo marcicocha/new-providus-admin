@@ -286,8 +286,8 @@ export default {
     },
   },
   methods: {
-    previewImages(imageSorce, action) {
-      this.previewSrc = imageSorce
+    previewImages(imageSource, action) {
+      this.previewSrc = imageSource
       this.previewTitle = action
       this.previewIsVisible = true
     },

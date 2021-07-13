@@ -11,7 +11,8 @@
               v-model="payloadObject.comment"
               class="textarea"
               placeholder="Type in comments here"
-              rows="10"
+              :rows="10"
+              required
             ></AppTextArea>
           </div>
         </div>
