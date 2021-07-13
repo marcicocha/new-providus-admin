@@ -79,7 +79,7 @@
         }}</span>
       </template> -->
       <template slot="date" slot-scope="text, record">
-        {{ formatDate(record.createdDate) }}
+        {{ formatDate(record.date) }}
       </template>
       <template slot="status" slot-scope="text, record">
         <span
@@ -231,10 +231,12 @@ export default {
         {
           title: 'Date of Request',
           dataIndex: 'createdDate',
+          scopedSlots: { customRender: 'date' },
         },
         {
           title: 'Date Of Review',
           dataIndex: 'lastModifiedDate',
+          scopedSlots: { customRender: 'date' },
         },
         {
           title: 'Initiator ID',
