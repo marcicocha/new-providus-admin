@@ -241,7 +241,7 @@
     >
       <div class="previewContainer">
         <h2>Previewing {{ previewTitle }}</h2>
-        <hr />
+        <a-divider />
         <div class="image-wrapper">
           <object
             v-if="
@@ -249,7 +249,7 @@
             "
           >
             <embed
-              id="pdfID"
+              id="pdfRef"
               type="text/html"
               width="50%"
               height="100%"

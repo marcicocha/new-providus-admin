@@ -101,7 +101,7 @@
             style="font-weight: bold"
             @click="$emit('reviewRequest', record)"
           >
-            REVIEW
+            REVIEW REQUEST
           </a-button>
           <a
             v-if="record.status === 'APPROVED' || record.status === 'REJECTED'"

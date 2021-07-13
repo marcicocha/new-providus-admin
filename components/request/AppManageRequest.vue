@@ -33,13 +33,13 @@
                   :class="{ 'is-toggle-active': isProspect }"
                   @click="toggleMethod('prospect')"
                 >
-                  Prospect Information
+                  View Prospect Information
                 </li>
                 <li
                   :class="{ 'is-toggle-active': isUploaded }"
                   @click="toggleMethod('upload')"
                 >
-                  Uploaded
+                  View Uploaded
                 </li>
               </ul>
             </div>
@@ -70,7 +70,7 @@
               style="padding: 0px 200px"
               :action="operation"
               :request-id="userObject.requestId ? userObject.requestId : ''"
-              @success="closeModal('success')"
+              @closeDrawer="closeDrawer"
               @cancel="toggleMethod('prospect')"
             />
           </a-col>
@@ -117,6 +117,7 @@ export default {
     closeDrawer() {
       this.$emit('closeDrawer')
     },
+
     toggleMethod(str) {
       if (str) {
         if (str === 'prospect') {

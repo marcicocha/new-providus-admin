@@ -102,7 +102,7 @@ export default {
             description: response,
             duration: 4000,
           })
-          this.$emit('success')
+          this.$emit('closeDrawer')
         } catch (err) {
           this.isLoading = false
           const { default: errorHandler } = await import('@/utils/errorHandler')
@@ -134,7 +134,7 @@ export default {
             description: response,
             duration: 4000,
           })
-          this.$emit('success')
+          this.$emit('closeDrawer')
         } catch (err) {
           this.isLoading = false
 
