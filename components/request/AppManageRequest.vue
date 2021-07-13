@@ -46,7 +46,10 @@
             <br />
             <a-row type="flex" :gutter="16">
               <a-col :span="12">
-                <AppButton ghost type="danger" @click="toggleMethod('REJECT')"
+                <AppButton
+                  :ghost="operation !== 'REJECT'"
+                  type="danger"
+                  @click="toggleMethod('REJECT')"
                   >Reject</AppButton
                 >
               </a-col>

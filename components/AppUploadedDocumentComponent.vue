@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1>Uploaded Documents</h1>
+    <div style="display: flex; justify-content: space-between">
+      <h1>Uploaded Documents</h1>
+      <AppButton :block="false" @click="printAllHandler()">Print All</AppButton>
+    </div>
     <a-row type="flex" :gutter="16">
       <a-col :span="8">
         <div class="card">
@@ -264,14 +267,50 @@
         </div>
       </div>
     </a-modal>
+    <div v-show="false" id="printAll">
+      <img
+        :src="`data:image/jpg;base64,` + userObjectComputed.utility"
+        alt=""
+      />
+      <br />
+      <img :src="`data:image/png;base64,` + userObjectComputed.idCard" alt="" />
+      <br />
+      <img
+        :src="`data:image/png;base64,` + userObjectComputed.signature"
+        alt=""
+      />
+      <br />
+      <object>
+        <embed
+          id="pdfID"
+          type="text/html"
+          width="100%"
+          height="100%"
+          :src="`data:application/pdf;base64,` + userObjectComputed.reference1"
+        />
+      </object>
+      <br />
+      <object>
+        <embed
+          id="pdfID"
+          type="text/html"
+          width="100%"
+          height="100%"
+          :src="`data:application/pdf;base64,` + userObjectComputed.reference2"
+        />
+      </object>
+    </div>
   </div>
 </template>
 
 <script>
 // import printJS from 'print-js'
-
+import AppButton from '@/components/UI/AppButton'
 export default {
   name: 'AppUploadedDocumentComponent',
+  components: {
+    AppButton,
+  },
   props: {
     userObject: {
       type: Object,
@@ -307,6 +346,9 @@ export default {
     },
     closePreviewDrawer() {
       this.previewIsVisible = false
+    },
+    async printAllHandler() {
+      await this.$htmlToPaper('printAll')
     },
   },
 }
