@@ -251,7 +251,7 @@
             class="previewSrc"
             alt=""
           />
-          <object>
+          <object v-else>
             <embed
               id="pdfID"
               type="text/html"
