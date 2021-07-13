@@ -12,7 +12,6 @@
               class="textarea"
               placeholder="Type in comments here"
               :rows="10"
-              required
             ></AppTextArea>
           </div>
         </div>
