@@ -73,14 +73,18 @@ export default {
   data() {
     return {
       isLoading: false,
-      roleObject: {},
+      roleObject: {
+        isAdmin: false,
+      },
     }
   },
   watch: {
     currentRoleObject: {
       handler(newCurrentRoleObject) {
         if (!newCurrentRoleObject || this.mode === 'CREATE_MODE') {
-          this.roleObject = {}
+          this.roleObject = {
+            isAdmin: false,
+          }
         } else {
           this.roleObject = { ...newCurrentRoleObject }
         }

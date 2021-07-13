@@ -44,7 +44,7 @@ export default {
   methods: {
     onChange(checked) {
       // this.checked = checked;
-      this.$emit('change', checked)
+      this.$emit('input', checked)
     },
   },
 }
