@@ -131,11 +131,19 @@
       <a-col :span="8">
         <div class="card">
           <div class="card-content">
-            <div id="signature" class="content">
-              <img
-                :src="`data:image/png;base64,` + userObjectComputed.reference1"
-                alt=""
-              />
+            <div id="ref1" class="content">
+              <object>
+                <embed
+                  id="pdfID"
+                  type="text/html"
+                  width="100%"
+                  height="100%"
+                  :src="
+                    `data:application/pdf;base64,` +
+                    userObjectComputed.reference1
+                  "
+                />
+              </object>
             </div>
           </div>
           <footer class="card-footer">
@@ -148,7 +156,7 @@
               </i>
               <a-menu slot="overlay">
                 <a-menu-item>
-                  <a class="dropdown-item" @click="printMethod('signature')">
+                  <a class="dropdown-item" @click="printMethod('ref1')">
                     <i class="fas fa-pencil-alt" /> Print
                   </a>
                 </a-menu-item>
@@ -157,9 +165,9 @@
                     class="dropdown-item"
                     @click="
                       previewImages(
-                        `data:image/jpg;base64,` +
+                        `data:application/pdf;base64,` +
                           userObjectComputed.reference1,
-                        'Signature'
+                        'reference 1'
                       )
                     "
                   >
@@ -174,15 +182,23 @@
       <a-col :span="8">
         <div class="card">
           <div class="card-content">
-            <div id="signature" class="content">
-              <img
-                :src="`data:image/png;base64,` + userObjectComputed.reference2"
-                alt=""
-              />
+            <div id="ref2" class="content">
+              <object>
+                <embed
+                  id="pdfID"
+                  type="text/html"
+                  width="100%"
+                  height="100%"
+                  :src="
+                    `data:application/pdf;base64,` +
+                    userObjectComputed.reference2
+                  "
+                />
+              </object>
             </div>
           </div>
           <footer class="card-footer">
-            <p>Reference 1</p>
+            <p>Reference 2</p>
             <a-dropdown>
               <i
                 class="custom-table-btn fas fa-ellipsis-v"
@@ -191,7 +207,7 @@
               </i>
               <a-menu slot="overlay">
                 <a-menu-item>
-                  <a class="dropdown-item" @click="printMethod('signature')">
+                  <a class="dropdown-item" @click="printMethod('ref2')">
                     <i class="fas fa-pencil-alt" /> Print
                   </a>
                 </a-menu-item>
@@ -200,9 +216,9 @@
                     class="dropdown-item"
                     @click="
                       previewImages(
-                        `data:image/jpg;base64,` +
+                        `data:application/pdf;base64,` +
                           userObjectComputed.reference2,
-                        'Signature'
+                        'reference 2'
                       )
                     "
                   >
@@ -227,7 +243,24 @@
         <h2>Previewing {{ previewTitle }}</h2>
         <hr />
         <div class="image-wrapper">
-          <img :src="previewSrc" class="previewSrc" alt="" />
+          <img
+            v-if="
+              previewTitle !== 'reference 1' || previewTitle !== 'reference 2'
+            "
+            :src="previewSrc"
+            class="previewSrc"
+            alt=""
+          />
+          <object>
+            <embed
+              id="pdfID"
+              type="text/html"
+              width="50%"
+              height="100%"
+              :src="previewSrc"
+              class="previewSrc"
+            />
+          </object>
         </div>
       </div>
     </a-modal>
@@ -295,8 +328,13 @@ h1 {
     overflow: hidden;
     text-align: center;
     border-bottom: 0.5px solid #ddddddcb;
-    img {
-      max-height: 250px;
+    height: 250px;
+    .content {
+      height: 100%;
+      width: 100%;
+      img {
+        height: 100%;
+      }
     }
   }
   .card-footer {
@@ -322,6 +360,7 @@ i {
     margin: 0.2rem 0rem 0.5rem !important;
   }
   .image-wrapper {
+    margin: 0 auto;
     .previewSrc {
       max-width: 800px;
     }
