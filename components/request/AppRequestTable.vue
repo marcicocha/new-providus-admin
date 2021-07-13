@@ -78,6 +78,9 @@
             : 'INCOMPLETE'
         }}</span>
       </template>
+      <template slot="date" slot-scope="text, record">
+        {{ formatDate(record.createdDate) }}
+      </template>
       <template slot="status" slot-scope="text, record">
         <span
           class="status"
@@ -126,6 +129,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
 import AppPagination from '@/components/UI/AppPagination'
 import AppButton from '@/components/UI/AppButton.vue'
 import AppAdminInput from '@/components/UI/AppAdminInput'
@@ -170,9 +174,15 @@ export default {
         {
           title: 'Date of Request',
           dataIndex: 'createdDate',
+          scopedSlots: { customRender: 'date' },
         },
         {
           title: 'Status',
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'status' },
+        },
+        {
+          title: 'Individual WorkFlow Status',
           dataIndex: 'individualWorkFlow',
           scopedSlots: { customRender: 'individualWorkFlow' },
         },
@@ -180,11 +190,6 @@ export default {
           title: 'Initiator ID',
           dataIndex: 'createdBy',
         },
-        // {
-        //   title: '',
-        //   dataIndex: 'actions',
-        //   scopedSlots: { customRender: 'actions' },
-        // },
       ]
       const pendingColumns = [
         {
@@ -198,9 +203,15 @@ export default {
         {
           title: 'Date of Request',
           dataIndex: 'createdDate',
+          scopedSlots: { customRender: 'date' },
         },
         {
           title: 'Status',
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'status' },
+        },
+        {
+          title: 'Individual WorkFlow Status',
           dataIndex: 'individualWorkFlow',
           scopedSlots: { customRender: 'individualWorkFlow' },
         },
@@ -259,6 +270,9 @@ export default {
         status: this.status,
         currentPage: 0,
       }
+    },
+    formatDate(date) {
+      return moment(date).format('YYYY-MM-DD')
     },
     toggleContextSearch() {
       this.isContextSearch = !this.isContextSearch
