@@ -24,6 +24,7 @@
             :text-allowed="false"
             required
             rules="required"
+            :disabled="mode !== 'CREATE_MODE'"
           />
           <AppInput
             v-model="branchObject.branchName"
