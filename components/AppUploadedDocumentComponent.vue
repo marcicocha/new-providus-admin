@@ -235,7 +235,7 @@
       :visible="previewIsVisible"
       :footer="null"
       :destroy-on-close="true"
-      :dialog-style="{ top: '20px' }"
+      :dialog-style="{ top: '50px' }"
       width="80%"
       @cancel="closePreviewDrawer"
     >
@@ -243,15 +243,11 @@
         <h2>Previewing {{ previewTitle }}</h2>
         <hr />
         <div class="image-wrapper">
-          <img
+          <object
             v-if="
-              previewTitle !== 'reference 1' || previewTitle !== 'reference 2'
+              previewTitle === 'reference 1' || previewTitle === 'reference 2'
             "
-            :src="previewSrc"
-            class="previewSrc"
-            alt=""
-          />
-          <object v-else>
+          >
             <embed
               id="pdfID"
               type="text/html"
@@ -261,6 +257,7 @@
               class="previewSrc"
             />
           </object>
+          <img v-else :src="previewSrc" class="previewSrc" alt="" />
         </div>
       </div>
     </a-modal>
@@ -323,6 +320,7 @@ h1 {
 .card {
   background: white;
   border: 0.5px solid #ddddddcb;
+  margin-bottom: 2rem;
   .card-content {
     padding: 10px;
     overflow: hidden;
@@ -360,9 +358,11 @@ i {
     margin: 0.2rem 0rem 0.5rem !important;
   }
   .image-wrapper {
-    margin: 0 auto;
     .previewSrc {
       max-width: 800px;
+      height: 70vh;
+      display: block;
+      margin: 0 auto;
     }
   }
 }
