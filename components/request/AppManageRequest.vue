@@ -39,7 +39,7 @@
                   :class="{ 'is-toggle-active': isUploaded }"
                   @click="toggleMethod('upload')"
                 >
-                  View Uploaded
+                  View Uploaded Documents
                 </li>
               </ul>
             </div>
