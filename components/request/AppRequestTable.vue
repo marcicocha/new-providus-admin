@@ -242,10 +242,6 @@ export default {
         },
         {
           title: 'Comment',
-          dataIndex: 'comment',
-        },
-        {
-          title: '',
           dataIndex: 'actions',
           scopedSlots: { customRender: 'actions' },
         },

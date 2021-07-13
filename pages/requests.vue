@@ -32,13 +32,14 @@
     <div>
       <a-modal
         :visible="commentModalIsVisible"
-        width="500px"
+        width="70%"
         :footer="null"
         :destroy-on-close="true"
         centered
         @cancel="closeModal"
       >
         <div>
+          <br />
           <a-table
             :columns="commentColumns"
             :data-source="commentLists"
