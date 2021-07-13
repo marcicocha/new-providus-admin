@@ -1,19 +1,22 @@
 <template>
   <div>
-    <h1>{{ actionComputed === 'ACCEPT' ? 'Accept' : 'Reject' }} Application</h1>
+    <h1>{{ action === 'ACCEPT' ? 'Accept' : 'Reject' }} Application</h1>
     <a-divider />
     <p>Add Comment Below</p>
     <div class="">
       <div>
         <div class="field">
           <div class="control">
-            <AppTextArea
-              v-model="payloadObject.comment"
-              class="textarea"
-              placeholder="Type in comments here"
-              :rows="10"
-              :required="action === 'REJECT'"
-            ></AppTextArea>
+            <ValidationObserver ref="observer" tag="div">
+              <AppTextArea
+                v-model="payloadObject.comment"
+                class="textarea"
+                placeholder="Type in comments here"
+                :rows="10"
+                :required="action === 'REJECT'"
+                :rules="action === 'REJECT' ? 'required' : ''"
+              ></AppTextArea>
+            </ValidationObserver>
           </div>
         </div>
       </div>
@@ -22,7 +25,7 @@
           <AppButton
             class="custom-btn"
             style="width: 100%"
-            @click="acceptRejectHandler(actionComputed)"
+            @click="acceptRejectHandler()"
             >Submit</AppButton
           >
         </a-col>
@@ -41,6 +44,7 @@
   </div>
 </template>
 <script>
+import { ValidationObserver } from 'vee-validate'
 import AppButton from '@/components/UI/AppButton.vue'
 import AppTextArea from '@/components/UI/AppTextArea'
 export default {
@@ -48,6 +52,7 @@ export default {
   components: {
     AppButton,
     AppTextArea,
+    ValidationObserver,
   },
   props: {
     action: {
@@ -66,9 +71,6 @@ export default {
     }
   },
   computed: {
-    requestIdComputed() {
-      return this.requestId
-    },
     actionComputed() {
       return this.action
     },
@@ -77,21 +79,19 @@ export default {
     cancelFunc() {
       this.$emit('cancel')
     },
-    acceptRejectHandler(action) {
-      if (action === 'ACCEPT') {
-        this.acceptMethod(this.requestIdComputed)
-      } else if (action === 'REJECT') {
-        this.rejectMethod(this.requestIdComputed)
+
+    async acceptRejectHandler() {
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        return
       }
-    },
-    async acceptMethod(requestId) {
-      if (requestId) {
-        const user = JSON.parse(localStorage.getItem('user'))
-        const config = {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-        const payload = { ...this.payloadObject, requestId }
-        try {
+      const user = JSON.parse(localStorage.getItem('user'))
+      const config = {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+      const payload = { ...this.payloadObject, requestId: this.requestId }
+      try {
+        if (this.action === 'ACCEPT') {
           const { response } = await this.$axios.$post(
             '/individualAdmin/approveIndividual',
             payload,
@@ -102,28 +102,7 @@ export default {
             description: response,
             duration: 4000,
           })
-          this.$emit('closeDrawer')
-        } catch (err) {
-          this.isLoading = false
-          const { default: errorHandler } = await import('@/utils/errorHandler')
-          errorHandler(err).forEach((msg) => {
-            this.$notification.error({
-              message: 'Error',
-              description: msg,
-              duration: 0,
-            })
-          })
-        }
-      }
-    },
-    async rejectMethod(requestId) {
-      if (requestId) {
-        const user = JSON.parse(localStorage.getItem('user'))
-        const config = {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-        const payload = { ...this.payloadObject, requestId }
-        try {
+        } else {
           const { response } = await this.$axios.$post(
             '/individualAdmin/rejectIndividual',
             payload,
@@ -134,19 +113,23 @@ export default {
             description: response,
             duration: 4000,
           })
-          this.$emit('closeDrawer')
-        } catch (err) {
-          this.isLoading = false
-
-          const { default: errorHandler } = await import('@/utils/errorHandler')
-          errorHandler(err).forEach((msg) => {
-            this.$notification.error({
-              message: 'Error',
-              description: msg,
-              duration: 0,
-            })
-          })
         }
+        requestAnimationFrame(() => {
+          this.$refs.observer.reset()
+          this.payloadObject = {}
+          this.isLoading = false
+          this.$emit('closeDrawer')
+        })
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 0,
+          })
+        })
       }
     },
   },
