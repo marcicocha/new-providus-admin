@@ -135,21 +135,13 @@
         </div>
       </a-col>
       <a-col :span="8">
-        <div class="card">
+        <div class="card" id="ref1">
           <div class="card-content">
-            <div id="ref1" class="content">
-              <object>
-                <embed
-                  id="pdfID"
-                  type="text/html"
-                  width="100%"
-                  height="100%"
-                  :src="
-                    `data:application/pdf;base64,` +
-                    userObjectComputed.reference1
-                  "
-                />
-              </object>
+            <div class="content">
+              <img
+                :src="`data:image/png;base64,` + userObjectComputed.reference1"
+                alt=""
+              />
             </div>
           </div>
           <footer class="card-footer">
@@ -171,7 +163,7 @@
                     class="dropdown-item"
                     @click="
                       previewImages(
-                        `data:application/pdf;base64,` +
+                        `data:image/jpg;base64,` +
                           userObjectComputed.reference1,
                         'reference 1'
                       )
@@ -189,18 +181,10 @@
         <div class="card">
           <div class="card-content">
             <div id="ref2" class="content">
-              <object>
-                <embed
-                  id="pdfID"
-                  type="text/html"
-                  width="100%"
-                  height="100%"
-                  :src="
-                    `data:application/pdf;base64,` +
-                    userObjectComputed.reference2
-                  "
-                />
-              </object>
+              <img
+                :src="`data:image/png;base64,` + userObjectComputed.reference2"
+                alt=""
+              />
             </div>
           </div>
           <footer class="card-footer">
@@ -222,7 +206,7 @@
                     class="dropdown-item"
                     @click="
                       previewImages(
-                        `data:application/pdf;base64,` +
+                        `data:image/jpg;base64,` +
                           userObjectComputed.reference2,
                         'reference 2'
                       )
@@ -249,21 +233,7 @@
         <h2>Previewing {{ previewTitle }}</h2>
         <a-divider />
         <div class="image-wrapper">
-          <object
-            v-if="
-              previewTitle === 'reference 1' || previewTitle === 'reference 2'
-            "
-          >
-            <embed
-              id="pdfRef"
-              type="text/html"
-              width="50%"
-              height="100%"
-              :src="previewSrc"
-              class="previewPdfSrc"
-            />
-          </object>
-          <img v-else :src="previewSrc" class="previewSrc" alt="" />
+          <img :src="previewSrc" class="previewSrc" alt="" />
         </div>
       </div>
     </a-modal>
@@ -280,28 +250,21 @@
         alt=""
       />
       <br />
-      <!-- <embed
-        id="pdfID"
-        type="application/pdf"
-        width="100%"
-        height="100%"
-        :src="`data:application/pdf;base64,` + userObjectComputed.reference1"
+      <img
+        :src="`data:image/png;base64,` + userObjectComputed.reference1"
+        alt=""
       />
-      <br /> -->
-      <!-- 
-      <embed
-        id="pdfID"
-        type="application/pdf"
-        width="100%"
-        height="100%"
-        :src="`data:application/pdf;base64,` + userObjectComputed.reference2"
-      /> -->
+      <br />
+      <img
+        :src="`data:image/png;base64,` + userObjectComputed.reference2"
+        alt=""
+      />
+      <br />
     </div>
   </div>
 </template>
 
 <script>
-// import printJS from 'print-js'
 import AppButton from '@/components/UI/AppButton'
 export default {
   name: 'AppUploadedDocumentComponent',
@@ -332,17 +295,12 @@ export default {
       this.previewTitle = action
       this.previewIsVisible = true
     },
-    printMethod(imgId) {
+    async printMethod(imgId) {
       // const utilityPrint = document.getElementById('utility')
-      this.$htmlToPaper(imgId)
+      await this.$htmlToPaper(imgId)
     },
     closePreviewDrawer() {
       this.previewIsVisible = false
-    },
-    blobHandler(base64) {
-      const fileURL = window.URL.createObjectURL(new Blob([base64]))
-      console.log(fileURL, 'FILE URL')
-      return fileURL
     },
     printAllHandler() {
       this.$htmlToPaper('printAll')
