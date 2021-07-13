@@ -55,7 +55,7 @@
               </a-col>
             </a-row>
           </a-col>
-          <a-col :span="18">
+          <a-col :span="18" v-if="!pendingSpinner">
             <AppAccountDetailsComponent
               v-if="isProspect"
               :user-object="userObject"

@@ -71,13 +71,13 @@
           >{{ record.category }}</span
         >
       </template>
-      <template slot="individualWorkFlow" slot-scope="text, record">
+      <!-- <template slot="individualWorkFlow" slot-scope="text, record">
         <span>{{
           record.individualWorkFlow === 'COMPLETED'
             ? record.individualWorkFlow
             : 'INCOMPLETE'
         }}</span>
-      </template>
+      </template> -->
       <template slot="date" slot-scope="text, record">
         {{ formatDate(record.createdDate) }}
       </template>
@@ -182,9 +182,8 @@ export default {
           scopedSlots: { customRender: 'status' },
         },
         {
-          title: 'Individual WorkFlow Status',
+          title: 'WorkFlow',
           dataIndex: 'individualWorkFlow',
-          scopedSlots: { customRender: 'individualWorkFlow' },
         },
         {
           title: 'Initiator ID',
@@ -211,9 +210,8 @@ export default {
           scopedSlots: { customRender: 'status' },
         },
         {
-          title: 'Individual WorkFlow Status',
+          title: 'WorkFlow',
           dataIndex: 'individualWorkFlow',
-          scopedSlots: { customRender: 'individualWorkFlow' },
         },
         {
           title: 'Actions',
