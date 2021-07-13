@@ -372,7 +372,7 @@ export default {
           console.log('ALMOST AT THE PRINTER')
           // this.printSource = this.$html2canvas(el, options)
 
-          this.$htmlToPaper('bvn')
+          this.$htmlToPaper('bvn', response)
           console.log('IT IS AT THE PRINTER')
           this.isBvnDetails = false
           this.loading = false

@@ -22,10 +22,7 @@
               </i>
               <a-menu slot="overlay">
                 <a-menu-item>
-                  <a
-                    class="dropdown-item"
-                    @click="printMethod(userObjectComputed.utility, 'image')"
-                  >
+                  <a class="dropdown-item" @click="printMethod('utility')">
                     <i class="fas fa-print" /> Print
                   </a>
                 </a-menu-item>
@@ -70,10 +67,7 @@
                   <!-- <a @click="printMethod('idCard')">
                     <i class="fas fa-print" /> Print
                   </a> -->
-                  <a
-                    class="dropdown-item"
-                    @click="printMethod(userObjectComputed.idCard, 'image')"
-                  >
+                  <a class="dropdown-item" @click="printMethod('idCard')">
                     <i class="fas fa-print" /> Print
                   </a>
                 </a-menu-item>
@@ -115,10 +109,7 @@
               </i>
               <a-menu slot="overlay">
                 <a-menu-item>
-                  <a
-                    class="dropdown-item"
-                    @click="printMethod(userObjectComputed.signature, 'image')"
-                  >
+                  <a class="dropdown-item" @click="printMethod('signature')">
                     <i class="fas fa-print" /> Print
                   </a>
                 </a-menu-item>
@@ -168,10 +159,7 @@
               </i>
               <a-menu slot="overlay">
                 <a-menu-item>
-                  <a
-                    class="dropdown-item"
-                    @click="printMethod(userObjectComputed.reference1, 'pdf')"
-                  >
+                  <a class="dropdown-item" @click="printMethod('ref1')">
                     <i class="fas fa-print" /> Print
                   </a>
                 </a-menu-item>
@@ -222,10 +210,7 @@
               </i>
               <a-menu slot="overlay">
                 <a-menu-item>
-                  <a
-                    class="dropdown-item"
-                    @click="printMethod(userObjectComputed.reference2, 'pdf')"
-                  >
+                  <a class="dropdown-item" @click="printMethod('ref2')">
                     <i class="fas fa-print" /> Print
                   </a>
                 </a-menu-item>
@@ -272,7 +257,7 @@
               width="50%"
               height="100%"
               :src="previewSrc"
-              class="previewSrc"
+              class="previewPdfSrc"
             />
           </object>
           <img v-else :src="previewSrc" class="previewSrc" alt="" />
@@ -283,7 +268,7 @@
 </template>
 
 <script>
-import printJS from 'print-js'
+// import printJS from 'print-js'
 
 export default {
   name: 'AppUploadedDocumentComponent',
@@ -311,14 +296,14 @@ export default {
       this.previewTitle = action
       this.previewIsVisible = true
     },
-    printMethod(imgSrc, type) {
+    printMethod(imgId) {
       // const utilityPrint = document.getElementById('utility')
-      // this.$htmlToPaper(imgId)
-      printJS({
-        printable: imgSrc,
-        type,
-        base64: true,
-      })
+      this.$htmlToPaper(imgId)
+      // printJS({
+      //   printable: imgSrc,
+      //   type,
+      //   base64: true,
+      // })
     },
     closePreviewDrawer() {
       this.previewIsVisible = false
@@ -357,6 +342,8 @@ h1 {
       width: 100%;
       img {
         height: 100%;
+        width: 100%;
+        object-fit: contain;
       }
     }
   }
@@ -385,6 +372,12 @@ i {
   .image-wrapper {
     .previewSrc {
       max-width: 800px;
+      height: 70vh;
+      display: block;
+      margin: 0 auto;
+    }
+    .previewPdfSrc {
+      max-width: 100%;
       height: 70vh;
       display: block;
       margin: 0 auto;
