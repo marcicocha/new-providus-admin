@@ -75,7 +75,6 @@
               v-model="changePasswordObject.newUsername"
               label="User Name"
             />
-
             <AppInput
               v-model="changePasswordObject.oldPassword"
               label="Enter Old Password"
@@ -202,7 +201,7 @@ export default {
         )
 
         this.userDigest = response
-
+        this.changePasswordObject.newUsername = this.userDigest.username
         localStorage.setItem('user', JSON.stringify(this.userDigest))
         if (this.userDigest.firstTimeLogin) {
           this.isModalVisible = true
@@ -218,7 +217,6 @@ export default {
           this.$notification.error({
             message: 'Error',
             description: msg,
-            duration: 4000,
           })
         })
       }
@@ -253,7 +251,6 @@ export default {
         this.$notification.success({
           message: 'Successful',
           description: 'Password Updated Successfully',
-          duration: 4000,
         })
         requestAnimationFrame(() => {
           this.$refs.obs3.reset()
@@ -269,7 +266,6 @@ export default {
           this.$notification.error({
             message: 'Error',
             description: msg,
-            duration: 4000,
           })
         })
       }
@@ -292,7 +288,6 @@ export default {
         this.$notification.success({
           message: 'Success',
           description: 'Pasword reset was successful',
-          duration: 4000,
         })
         requestAnimationFrame(() => {
           this.$refs.obs2.reset()
@@ -307,7 +302,6 @@ export default {
           this.$notification.error({
             message: 'Error',
             description: msg,
-            duration: 4000,
           })
         })
       }

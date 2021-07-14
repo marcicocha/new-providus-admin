@@ -187,7 +187,6 @@ export default {
           this.$notification.error({
             message: 'Error',
             description: msg,
-            duration: 4000,
           })
         })
       }

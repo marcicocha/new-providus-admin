@@ -101,8 +101,9 @@ export default {
     },
   },
   watch: {},
-  mounted() {
-    this.userDigest = JSON.parse(localStorage.getItem('user'))
+  async mounted() {
+    this.userDigest = await JSON.parse(localStorage.getItem('user'))
+    this.userObject.newUsername = this.userDigest.username
   },
   methods: {
     transformRole(role) {
@@ -146,7 +147,6 @@ export default {
         this.$notification.success({
           message: 'Success',
           description: 'Password Updated Successfully',
-          duration: 4000,
         })
         requestAnimationFrame(() => {
           this.$refs.observer.reset()

@@ -120,14 +120,12 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: 'LGA is Created Successfully ',
-            duration: 4000,
           })
         } else {
           await this.$axios.$put('/state', this.lgaObject, config)
           this.$notification.success({
             message: 'Success',
             description: 'LGA is Updated Successfully',
-            duration: 4000,
           })
         }
         requestAnimationFrame(() => {

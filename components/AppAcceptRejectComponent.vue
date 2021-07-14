@@ -100,7 +100,6 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: response,
-            duration: 4000,
           })
         } else {
           const { response } = await this.$axios.$post(
@@ -111,7 +110,6 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: response,
-            duration: 4000,
           })
         }
         requestAnimationFrame(() => {

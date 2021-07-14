@@ -115,14 +115,12 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: 'Role Created Successfully ',
-            duration: 4000,
           })
         } else {
           await this.$axios.$put('/role', this.roleObject, config)
           this.$notification.success({
             message: 'Success',
             description: 'Role Edited Successfully ',
-            duration: 4000,
           })
         }
 

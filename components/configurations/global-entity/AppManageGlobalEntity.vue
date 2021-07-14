@@ -107,7 +107,6 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: 'Global Entity is Created Successfully ',
-            duration: 4000,
           })
         } else {
           await this.$axios.$put(
@@ -118,7 +117,6 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: 'Global Entity is Updated Successfully',
-            duration: 4000,
           })
         }
         requestAnimationFrame(() => {

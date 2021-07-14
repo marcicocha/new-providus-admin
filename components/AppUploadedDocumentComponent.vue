@@ -135,7 +135,7 @@
         </div>
       </a-col>
       <a-col :span="8">
-        <div class="card" id="ref1">
+        <div id="ref1" class="card">
           <div class="card-content">
             <div class="content">
               <img

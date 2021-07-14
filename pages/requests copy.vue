@@ -492,7 +492,7 @@ export default {
             message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> Network Error </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
           return
@@ -509,7 +509,7 @@ export default {
             message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> ${errorMessage} </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
         }
@@ -542,7 +542,7 @@ export default {
             message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> Network Error </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
           return
@@ -559,7 +559,7 @@ export default {
             message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> ${errorMessage} </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
         }
@@ -630,7 +630,7 @@ export default {
             message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> Network Error </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
           return
@@ -647,7 +647,7 @@ export default {
             message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> ${errorMessage} </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
         }
@@ -679,7 +679,7 @@ export default {
             message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> Network Error </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
           return
@@ -696,7 +696,7 @@ export default {
             message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> ${errorMessage} </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
         }
@@ -733,7 +733,7 @@ export default {
             message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> Network Error </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
           return
@@ -750,7 +750,7 @@ export default {
             message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> ${errorMessage} </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
         }
@@ -787,7 +787,7 @@ export default {
             message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> Network Error </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
           return
@@ -804,7 +804,7 @@ export default {
             message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> ${errorMessage} </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
         }

@@ -118,14 +118,12 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: 'State is Created Successfully',
-            duration: 4000,
           })
         } else {
           await this.$axios.$put('/country', this.countryObject, config)
           this.$notification.success({
             message: 'Success',
             description: 'State is Updated Successfully',
-            duration: 4000,
           })
         }
         requestAnimationFrame(() => {

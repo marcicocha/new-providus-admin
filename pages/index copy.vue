@@ -184,7 +184,7 @@ export default {
           message: `<p class="toast-title">Validation Message</p>
                     <p class="toast-msg"> Username / Email Field Required </p>`,
           type: 'error',
-          duration: 4000,
+
           dismissible: true,
         })
         proceed = false
@@ -200,7 +200,7 @@ export default {
       //     message: `<p class="toast-title">Validation Message</p>
       //               <p class="toast-msg"> Email Entered is Invalid </p>`,
       //     type: 'error',
-      //     duration: 4000,
+      //
       //     dismissible: true,
       //   })
       //   proceed = false
@@ -214,7 +214,7 @@ export default {
           message: `<p class="toast-title">Validation Message</p>
                     <p class="toast-msg"> Password Field Required </p>`,
           type: 'error',
-          duration: 4000,
+
           dismissible: true,
         })
         proceed = false
@@ -257,7 +257,7 @@ export default {
               message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> Network Error </p>`,
               type: 'error',
-              duration: 4000,
+
               dismissible: true,
             })
             return
@@ -273,7 +273,7 @@ export default {
               message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> ${errorMessage} </p>`,
               type: 'error',
-              duration: 4000,
+
               dismissible: true,
             })
           }
@@ -314,7 +314,7 @@ export default {
             message: `<p class="toast-title">Success</p>
                     <p class="toast-msg"> Password Updated Successfully </p>`,
             type: 'success',
-            duration: 4000,
+
             dismissible: true,
           })
           this.changePasswordObject = {}
@@ -330,7 +330,7 @@ export default {
               message: `<p class="toast-title">Error</p>
                     <p class="toast-msg"> Network Error </p>`,
               type: 'error',
-              duration: 4000,
+
               dismissible: true,
             })
             return
@@ -347,7 +347,7 @@ export default {
               message: `<p class="toast-title">Error</p>
                     <p class="toast-msg"> ${errorMessage} </p>`,
               type: 'error',
-              duration: 4000,
+
               dismissible: true,
             })
           }
@@ -357,7 +357,7 @@ export default {
           message: `<p class="toast-title">Warning</p>
                     <p class="toast-msg"> please fill the required filled </p>`,
           type: 'warning',
-          duration: 4000,
+
           dismissible: true,
         })
       }
@@ -378,7 +378,7 @@ export default {
           message: `<p class="toast-title">Success</p>
                     <p class="toast-msg">Password reset Successful</p>`,
           type: 'success',
-          duration: 4000,
+
           dismissible: true,
         })
       } catch (err) {
@@ -393,7 +393,7 @@ export default {
             message: `<p class="toast-title">Error</p>
                     <p class="toast-msg"> Network Error </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
           return
@@ -409,7 +409,7 @@ export default {
             message: `<p class="toast-title">Error</p>
                     <p class="toast-msg"> ${errorMessage} </p>`,
             type: 'error',
-            duration: 4000,
+
             dismissible: true,
           })
         }

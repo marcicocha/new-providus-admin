@@ -167,7 +167,7 @@ export default {
       //   this.$notification.error({
       //     message: 'Warning',
       //     description: 'Email Entered is Invalid',
-      //     duration: 4000,
+      //
       //   })
       //   return
       // }
@@ -178,14 +178,12 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: 'User Created Successfully ',
-            duration: 4000,
           })
         } else {
           await this.$axios.$put('/user', this.userObject, config)
           this.$notification.success({
             message: 'Success',
             description: 'User Edited Successfully ',
-            duration: 4000,
           })
         }
 

@@ -128,7 +128,6 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: 'System Config is Created Successfully',
-            duration: 4000,
           })
         } else {
           await this.$axios.$put(
@@ -139,7 +138,6 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: 'System Config is Updated Successfully',
-            duration: 4000,
           })
         }
 

@@ -140,14 +140,12 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: 'Global Data is created Successfully',
-            duration: 4000,
           })
         } else {
           await this.$axios.$put('/globalData', this.globalDataObject, config)
           this.$notification.success({
             message: 'Success',
             description: 'Global Data is updated Successfully ',
-            duration: 4000,
           })
         }
         requestAnimationFrame(() => {

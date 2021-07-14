@@ -154,14 +154,12 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: 'Work Group Created Successfully',
-            duration: 4000,
           })
         } else {
           await this.$axios.$put('/workFlowGroup', this.workGroupObject, config)
           this.$notification.success({
             message: 'Success',
             description: 'Work Group Edited Successfully ',
-            duration: 4000,
           })
         }
 

@@ -216,7 +216,6 @@ export default {
             notification.error({
               message: 'Error Message',
               description: errorMessage,
-              duration: 4000,
             })
           }
         })

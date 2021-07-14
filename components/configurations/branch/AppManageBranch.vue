@@ -126,14 +126,12 @@ export default {
           this.$notification.success({
             message: 'Success',
             description: 'Branch is Created Successfully',
-            duration: 4000,
           })
         } else {
           await this.$axios.$put('/branch', this.branchObject, config)
           this.$notification.success({
             message: 'Success',
             description: 'Branch is Updated Successfully',
-            duration: 4000,
           })
         }
         requestAnimationFrame(() => {

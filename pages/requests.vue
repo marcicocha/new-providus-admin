@@ -26,7 +26,7 @@
     <AppManageRequest
       :visible="visible"
       :user-object="userObject"
-      :pendingSpinner="pendingSpinner"
+      :pending-spinner="pendingSpinner"
       @closeDrawer="closeDrawer"
     />
     <div>
