@@ -3,23 +3,47 @@
     <div class="page_header">
       <h1>Manage Requests</h1>
     </div>
-    <a-tabs default-active-key="1">
+    <a-tabs v-model="activeKey" @tabClick="changeTabHandler">
       <a-tab-pane key="1" tab="All" force-render>
-        <AppRequestTable />
+        <AppRequestTable
+          :data-source="dataSource"
+          :page-number="pageNumber"
+          :total-elements="totalElements"
+          :loading="loading"
+          @getRequestHandler="getRequestHandler"
+        />
       </a-tab-pane>
       <a-tab-pane key="2" tab="Pending">
-        <AppRequestTable status="PENDING" @reviewRequest="reviewRequest" />
+        <AppRequestTable
+          status="PENDING"
+          :data-source="dataSource"
+          :total-elements="totalElements"
+          :page-number="pageNumber"
+          :loading="loading"
+          @reviewRequest="reviewRequest"
+          @getRequestHandler="getRequestHandler"
+        />
       </a-tab-pane>
       <a-tab-pane key="3" tab="Approved">
         <AppRequestTable
           status="APPROVED"
+          :data-source="dataSource"
+          :total-elements="totalElements"
+          :page-number="pageNumber"
+          :loading="loading"
           @fetchCommentHandler="fetchCommentHandler"
+          @getRequestHandler="getRequestHandler"
         />
       </a-tab-pane>
       <a-tab-pane key="4" tab="Rejected">
         <AppRequestTable
           status="REJECTED"
+          :data-source="dataSource"
+          :total-elements="totalElements"
+          :page-number="pageNumber"
+          :loading="loading"
           @fetchCommentHandler="fetchCommentHandler"
+          @getRequestHandler="getRequestHandler"
         />
       </a-tab-pane>
     </a-tabs>
@@ -93,6 +117,10 @@ export default {
       pendingSpinner: false,
       activeKey: '1',
       visible: false,
+      totalElements: 0,
+      pageNumber: 0,
+      dataSource: [],
+      status: '',
     }
   },
   beforeMount() {
@@ -124,6 +152,24 @@ export default {
       //   this.isProspect = true
       //   this.isUploaded = false
       //   this.operation = ''
+    },
+    changeTabHandler(key) {
+      if (key === '1') {
+        this.status = undefined
+      }
+      if (key === '2') {
+        this.status = 'PENDING'
+      }
+      if (key === '3') {
+        this.status = 'APPROVED'
+      }
+      if (key === '4') {
+        this.status = 'REJECTED'
+      }
+      const obj = {
+        currentPage: 0,
+      }
+      this.getRequestHandler(obj)
     },
     async fetchCommentHandler(requestId) {
       const user = JSON.parse(localStorage.getItem('user'))
@@ -169,6 +215,39 @@ export default {
         this.pendingSpinner = false
         this.isLoading = false
         this.visible = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 0,
+          })
+        })
+      }
+    },
+    async getRequestHandler(obj) {
+      const searchObject = {
+        ...obj,
+        status: this.status,
+      }
+      const user = JSON.parse(localStorage.getItem('user'))
+      const params = { ...searchObject }
+      const config = {
+        headers: { Authorization: `Bearer ${user.token}` },
+        params,
+      }
+      this.loading = true
+      try {
+        const { response } = await this.$axios.$get(
+          '/individualAdmin/search',
+          config
+        )
+        this.dataSource = response.content
+        this.totalElements = response.totalElements
+        this.pageNumber = response.pageable.pageNumber
+        this.loading = false
+      } catch (err) {
+        this.loading = false
         const { default: errorHandler } = await import('@/utils/errorHandler')
         errorHandler(err).forEach((msg) => {
           this.$notification.error({

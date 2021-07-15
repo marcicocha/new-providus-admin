@@ -142,19 +142,26 @@ export default {
     AppAdminInput,
   },
   props: {
-    status: {
-      type: String,
-      default: undefined,
+    dataSource: {
+      type: Array,
+      default: () => [],
+    },
+    totalElements: {
+      type: [String, Number],
+      default: 0,
+    },
+    pageNumber: {
+      type: [String, Number],
+      default: 0,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
     return {
-      dataSource: [],
-      loading: false,
-      totalElements: 0,
-      pageNumber: 0,
       searchObject: {
-        status: this.status,
         currentPage: 0,
       },
       isContextSearch: false,
@@ -263,7 +270,6 @@ export default {
   methods: {
     resetMethod() {
       this.searchObject = {
-        status: this.status,
         currentPage: 0,
       }
     },
@@ -276,10 +282,10 @@ export default {
     getRequestHandler() {
       this.searchObject = {
         ...this.searchObject,
-        status: this.status,
         currentPage: 0,
       }
-      this.getRequestMethod(this.searchObject)
+      this.$emit('getRequestHandler', this.searchObject)
+      this.isContextSearch = false
     },
     paginationChangeHandler(pageNumber, pageSize) {
       //
@@ -288,7 +294,7 @@ export default {
         currentPage: pageNumber - 1,
         pageSize,
       }
-      this.getRequestMethod(pageObject)
+      this.$emit('getRequestHandler', pageObject)
     },
     onShowSizeChange(current, pageSize) {
       const pageObject = {
@@ -296,37 +302,7 @@ export default {
         currentPage: current === 0 ? 0 : current - 1,
         pageSize,
       }
-      this.getRequestMethod(pageObject)
-    },
-    async getRequestMethod(obj) {
-      console.log(this.searchObject, 'TEST')
-      const user = JSON.parse(localStorage.getItem('user'))
-      const params = { ...obj }
-      const config = {
-        headers: { Authorization: `Bearer ${user.token}` },
-        params,
-      }
-      this.loading = true
-      try {
-        const { response } = await this.$axios.$get(
-          '/individualAdmin/search',
-          config
-        )
-        this.dataSource = response.content
-        this.totalElements = response.totalElements
-        this.pageNumber = response.pageable.pageNumber
-        this.loading = false
-      } catch (err) {
-        this.loading = false
-        const { default: errorHandler } = await import('@/utils/errorHandler')
-        errorHandler(err).forEach((msg) => {
-          this.$notification.error({
-            message: 'Error',
-            description: msg,
-            duration: 0,
-          })
-        })
-      }
+      this.$emit('getRequestHandler', pageObject)
     },
   },
 }
