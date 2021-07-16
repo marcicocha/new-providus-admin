@@ -199,6 +199,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    status: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
