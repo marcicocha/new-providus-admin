@@ -142,6 +142,12 @@ export default {
       this.$router.push('/')
     }
   },
+  mounted() {
+    const obj = {
+      currentPage: 0,
+    }
+    this.getRequestHandler(obj)
+  },
   methods: {
     closeModal() {
       this.commentModalIsVisible = false

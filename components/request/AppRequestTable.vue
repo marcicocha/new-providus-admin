@@ -11,6 +11,13 @@
       <a-row type="flex" :gutter="16">
         <a-col :span="8">
           <AppAdminInput
+            v-model="searchObject.requestId"
+            label="RequestId"
+            border
+          />
+        </a-col>
+        <a-col :span="8">
+          <AppAdminInput
             v-model="searchObject.branch"
             label="Branch Code"
             border
@@ -30,6 +37,38 @@
           <AppAdminInput
             v-model="searchObject.lastName"
             label="Last Name"
+            border
+          />
+        </a-col>
+        <a-col :span="8">
+          <AppAdminInput
+            v-model="searchObject.maritalStatus"
+            label="Marital Status"
+            border
+          />
+        </a-col>
+        <a-col :span="8">
+          <AppAdminInput
+            v-model="searchObject.nationality"
+            label="Nationality"
+            border
+          />
+        </a-col>
+        <a-col :span="8">
+          <AppSelect
+            v-model="searchObject.individualWorkFlow"
+            label="Individual Work Flow"
+            :remote="false"
+            :data="[
+              'BVN',
+              'BASIC_INFO',
+              'KIN_DETAILS',
+              'SELFIE',
+              'DOC_UPLOAD',
+              'LIVENESS_CHECK',
+              'REFERENCE_UPLOAD',
+              'COMPLETED',
+            ]"
             border
           />
         </a-col>
@@ -133,12 +172,14 @@ import moment from 'moment'
 import AppPagination from '@/components/UI/AppPagination'
 import AppButton from '@/components/UI/AppButton.vue'
 import AppAdminInput from '@/components/UI/AppAdminInput'
+import AppSelect from '@/components/UI/AppSelect'
 
 export default {
   name: 'AppRequestTable',
   components: {
     AppPagination,
     AppButton,
+    AppSelect,
     AppAdminInput,
   },
   props: {
@@ -263,9 +304,6 @@ export default {
       }
       return allColumns
     },
-  },
-  mounted() {
-    this.getRequestMethod(this.searchObject)
   },
   methods: {
     resetMethod() {
